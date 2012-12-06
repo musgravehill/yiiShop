@@ -7,6 +7,7 @@
 </div>
 <div class="span-5 last">
 	<div id="sidebar">
+            <h1 style="color:red;">column2<h1>
 	<?php
 		$this->beginWidget('zii.widgets.CPortlet', array(
 			'title'=>'Operations',
