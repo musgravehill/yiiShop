@@ -1,0 +1,1 @@
+yiic webapp C:\usr\apache\htdocs\yii
