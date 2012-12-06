@@ -1,3 +1,3 @@
 # yiiShop
 
-php/yii
+online store based on yii
