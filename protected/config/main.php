@@ -35,6 +35,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+                        'loginUrl'=>array('site/login'),
 		),
 		// uncomment the following to enable URLs in path-format
 		/*
@@ -58,6 +59,7 @@ return array(
 			'username' => 'yiishop',
 			'password' => 'yiishop',
 			'charset' => 'utf8',
+                        'tablePrefix' => 'yii_',
 		),
 		
 		'errorHandler'=>array(
