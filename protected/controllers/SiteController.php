@@ -1,6 +1,6 @@
 <?php
 
-class SiteController extends Controller {
+class SiteController extends bobController {
 
     /**
      * Declares class-based actions.
@@ -121,44 +121,41 @@ class SiteController extends Controller {
 
         //сбрасываем все существующие правила
         $auth->clearAll();
-
-        //Операции ТОВАРЫ
-        $auth->createOperation('viewCatalog', 'view all catalog with goods');
-        $auth->createOperation('viewProduct', 'view some product');    
-        $auth->createOperation('siteIndex', 'site Index');  //Controller: $this->getId() . ucfirst($this->getAction()->getId());
+        
+        //base operation
+        $bizRule = 'return Yii::app()->user->id== $_GET["uid"];';
+        $auth->createTask('siteIndex', 'site Index',$bizRule);  //Controller: $this->getId() . ucfirst($this->getAction()->getId());
         $auth->createOperation('siteLogin', 'site Login'); 
         $auth->createOperation('siteLogout', 'site Logout'); 
-        $auth->createOperation('siteNorights', 'site Norights'); 
-
-        //$bizRule = 'return Yii::app()->user->id==$params["user"]->u_id;';
-        //$task = $auth->createTask('updateOwnData', 'изменение своих данных', $bizRule); //ТАСК выполнится, если БизРул==труе
-        //$task->addChild('updateUser'); //к какой операции привяжем данный ТАСК
+        $auth->createOperation('siteContact', 'site Contact');
+        $auth->createOperation('siteCreateRBAC','site CreateRBAC');
+        
+        //noRights operation        
+        $auth->createOperation('siteNorights', 'site Norights');        
 
         //создаем роль для пользователя admin и указываем, какие операции он может выполнять
-        $admin = $auth->createRole('admin');
-        $admin->addChild('viewCatalog');
-        $admin->addChild('viewProduct');  
+        $admin = $auth->createRole('admin');         
         $admin->addChild('siteIndex');  
         $admin->addChild('siteLogin');  
         $admin->addChild('siteLogout');  
+        $admin->addChild('siteContact');
+        $admin->addChild('siteCreateRBAC');
         $admin->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав
 
         //создаем роль user и добавляем операции для неё
-        $user = $auth->createRole('user');
-        $user->addChild('viewCatalog');
-        $user->addChild('viewProduct');  
-        $user->addChild('siteIndex');  
-        $user->addChild('siteLogin');  
-        $user->addChild('siteLogout');
-        $user->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав
+        $client = $auth->createRole('client');         
+        $client->addChild('siteIndex');  
+        $client->addChild('siteLogin');  
+        $client->addChild('siteLogout');
+        $client->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав     
         
         //guest default role
-        $guest = $auth->createRole('guest');         
-        $guest->addChild('siteIndex');  
-        $guest->addChild('siteLogin');  
+        $guest = $auth->createRole('guest');  
+        //$guest->addChild('siteIndex');        
+        $guest->addChild('siteLogin');   
         $guest->addChild('siteLogout');
         $guest->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав
-        
+     
         
         $auth->save();
 

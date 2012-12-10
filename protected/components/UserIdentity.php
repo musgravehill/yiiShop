@@ -16,9 +16,16 @@ class UserIdentity extends CUserIdentity {
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         else {
             $this->_id = $user->id;
-            $this->username = $user->username;            
-            $this->setState('role', $user->role);
+            $this->username = $user->username;
+            //$this->setState('role', $user->role);
             $this->errorCode = self::ERROR_NONE;
+
+            $auth = Yii::app()->authManager;
+            if (!$auth->isAssigned($user->role, $this->_id)) {
+                if ($auth->assign($user->role, $this->_id)) {
+                    Yii::app()->authManager->save();
+                }
+            }
         }
         return $this->errorCode == self::ERROR_NONE;
     }

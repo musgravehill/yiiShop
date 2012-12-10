@@ -29,8 +29,8 @@ return array(
     'components' => array(
         'user' => array(
             // enable cookie-based authentication            
-            'allowAutoLogin' => false,
-            'loginUrl' => '/index.php?r=site/login', 
+            'allowAutoLogin' => true,
+            'loginUrl' => '/index.php?r=site/login',             
             
         ),
         // uncomment the following to enable URLs in path-format
