@@ -45,7 +45,7 @@
 
                 
         <?php 
-          echo '<h1 style="color:green;">'.Yii::app()->user->name.'</h1>';
+          echo '<h1 style="color:green;">'.Yii::app()->user->name.'</h1>';          
         
         //var_dump(Yii::app()->components['request']); ?>         
                 

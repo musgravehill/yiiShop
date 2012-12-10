@@ -20,4 +20,27 @@ class Controller extends CController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
+        
+        protected function beforeAction($action) {
+        
+        /*if(parent::beforeAction($action))
+        {
+            echo $this->getId();
+            var_dump('action' . ucfirst(Yii::app()->controller->getAction()->getId()));
+            //var_dump( $this->getAction());
+            
+        }*/
+        
+        if (Yii::app()->user->checkAccess($this->getId() . ucfirst($this->getAction()->getId()))) {
+            return true;
+        } else { //403 forbidden
+            Yii::app()->request->redirect(Yii::app()->user->loginUrl);
+        }
+        
+        
+        
+        //Yii::app()->request->redirect(Yii::app()->user->returnUrl); - url before loginPage
+        
+        return true;
+    }
 }

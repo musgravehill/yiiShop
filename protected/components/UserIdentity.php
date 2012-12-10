@@ -16,7 +16,8 @@ class UserIdentity extends CUserIdentity {
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         else {
             $this->_id = $user->id;
-            $this->username = $user->username;
+            $this->username = $user->username;            
+            $this->setState('role', $user->role);
             $this->errorCode = self::ERROR_NONE;
         }
         return $this->errorCode == self::ERROR_NONE;
@@ -27,6 +28,10 @@ class UserIdentity extends CUserIdentity {
      */
     public function getId() {
         return $this->_id;
+    }
+
+    public function getName() {
+        return $this->username;
     }
 
 }

@@ -34,10 +34,17 @@ class User extends CActiveRecord
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
+		// will receive user inputs.		
+                return array(
 			array('username, password, email, role', 'required'),
-			array('username, password, email, role', 'length', 'max'=>128)			
+                        array('username, password, email, role', 'length', 'max'=>128),                    
+			array('email', 'unique'),
+			array('role', 'safe'), //http://phptime.ru/blog/yii/23.html			
+			array('email', 'email'),
+			array('password', 'length', 'min'=>5),
+			// The following rule is used by search().
+			// Please remove those attributes that should not be searched.
+			array('username, password, email, role', 'safe', 'on'=>'search'),
 		);
 	}
 	/**
