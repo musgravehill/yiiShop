@@ -20,29 +20,15 @@ class SiteController extends bobController {
         );
     }
 
-    /**
-     * This is the default 'index' action that is invoked
-     * when an action is not explicitly requested by users.
-     */
-    public function actionIndex() {
-        // renders the view file 'protected/views/site/index.php'
-        // using the default layout 'protected/views/layouts/main.php'
-        //var_dump(Yii::app()->user);
-         
-        
-        $this->render('index');        
-        
+    public function actionIndex() {        
+        $this->render('index');
+    }
+
+    public function actionNorights() {
+
+        $this->render('norights');
     }
     
-    public function  actionNorights() {         
-        
-        $this->render('norights');    
-    }  
-    
-
-    /**
-     * This is the action to handle external exceptions.
-     */
     public function actionError() {
         if ($error = Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest)
@@ -56,6 +42,11 @@ class SiteController extends bobController {
      * Displays the contact page
      */
     public function actionContact() {
+        if (!Yii::app()->user->checkAccess('siteContact')) {            
+            Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
+        }
+        
+        
         $model = new ContactForm;
         if (isset($_POST['ContactForm'])) {
             $model->attributes = $_POST['ContactForm'];
@@ -79,11 +70,13 @@ class SiteController extends bobController {
      * Displays the login page
      */
     public function actionLogin() {
-        
-        //если Гость - иди логинься
-        if (!Yii::app()->user->isGuest) { $this->redirect("/site/norights"); } 
-        
-        
+
+        //уже зареган 
+        if (!Yii::app()->user->isGuest) {
+            $this->redirect("/site/norights");
+        }
+
+
         $loginForm = new LoginForm;
 
         // if it is ajax validation request
@@ -97,8 +90,7 @@ class SiteController extends bobController {
             $loginForm->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($loginForm->validate() && $loginForm->login())
-                $this->redirect(Yii::app()->user->returnUrl);            
-            //Yii::app()->request->redirect(Yii::app()->user->returnUrl); - from guideManual
+                $this->redirect(Yii::app()->user->returnUrl);           
         }
 
 
@@ -116,61 +108,68 @@ class SiteController extends bobController {
 
     //TODO DELETE this after using
     public function actionCreateRBAC() {
+        if (!Yii::app()->user->checkAccess('siteCreateRBAC')) {            
+            Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
+        }
+        
+        /*
+         *  В каждом контроллере делаю "checkAccess". Если нельзя, то вызываю функцию "Yii::app()->user->loginRequired();"
+         *  Благодаря этой функции в "Yii::app()->user->returnUrl"  записывается предыдущуя страница, которая вызвала проверку прав.
+         *  Автоматом юзер редиректится на Логин. В Логине проверяется, если он уже зареган, то редиректится на НеХватаетПрав, иначе покажем
+         *  форму логина.
+         */
 
         $auth = Yii::app()->authManager;
 
         //сбрасываем все существующие правила
         $auth->clearAll();
-        
+
         //base operation
         $bizRule = 'return ( (Yii::app()->user->id == $_GET["uid"]) OR (Yii::app()->user->role == "admin") );';
-        $auth->createTask('siteIndex', 'site Index',$bizRule);
-        $auth->createOperation('siteLogin', 'site Login'); 
-        $auth->createOperation('siteLogout', 'site Logout'); 
+        $auth->createTask('siteIndex', 'site Index', $bizRule);
+        $auth->createOperation('siteLogin', 'site Login');
+        $auth->createOperation('siteLogout', 'site Logout');
         $auth->createOperation('siteContact', 'site Contact');
-        $auth->createOperation('siteCreateRBAC','site CreateRBAC');
+        $auth->createOperation('siteCreateRBAC', 'site CreateRBAC');
         $auth->createOperation('siteCaptcha', 'site Captcha');
-        
+
         //shop
         $auth->createOperation('shopCatalog', 'shop Catalog');
         $auth->createOperation('shopProduct', 'shop Product');
-        
+
         //noRights operation        
-        $auth->createOperation('siteNorights', 'site Norights');        
+        $auth->createOperation('siteNorights', 'site Norights');
 
         //создаем роль для пользователя admin и указываем, какие операции он может выполнять
-        $admin = $auth->createRole('admin');      
+        $admin = $auth->createRole('admin');
         $admin->addChild('shopCatalog');
         $admin->addChild('shopProduct');
-        
-        $admin->addChild('siteIndex');  
-        $admin->addChild('siteLogin');  
-        $admin->addChild('siteLogout');  
+
+        $admin->addChild('siteIndex');
+        $admin->addChild('siteLogin');
+        $admin->addChild('siteLogout');
         $admin->addChild('siteContact');
         $admin->addChild('siteCreateRBAC');
-        $admin->addChild('siteCaptcha');        
+        $admin->addChild('siteCaptcha');
         $admin->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав
-
         //создаем роль user и добавляем операции для неё
-        $client = $auth->createRole('client'); 
+        $client = $auth->createRole('client');
         $client->addChild('shopCatalog');
         $client->addChild('shopProduct');
-        
-        $client->addChild('siteIndex');  
-        $client->addChild('siteLogin');  
+
+        $client->addChild('siteIndex');
+        $client->addChild('siteLogin');
         $client->addChild('siteLogout');
         $client->addChild('siteCaptcha');
-        $client->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав     
-        
+        $client->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав 
+        //    
         //guest default role
-        $guest = $auth->createRole('guest'); 
-        $guest->addChild('shopCatalog');
-        //$guest->addChild('siteIndex');        
-        $guest->addChild('siteLogin');   
+        $guest = $auth->createRole('guest');               
+        $guest->addChild('siteLogin');
         $guest->addChild('siteLogout');
         $guest->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав
-     
-        
+
+
         $auth->save();
 
         $this->render('CreateRBAC');

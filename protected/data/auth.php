@@ -115,10 +115,9 @@ return array (
     'data' => NULL,
     'children' => 
     array (
-      0 => 'shopCatalog',
-      1 => 'siteLogin',
-      2 => 'siteLogout',
-      3 => 'siteNorights',
+      0 => 'siteLogin',
+      1 => 'siteLogout',
+      2 => 'siteNorights',
     ),
   ),
 );

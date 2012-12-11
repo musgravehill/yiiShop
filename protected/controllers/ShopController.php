@@ -3,9 +3,8 @@
 class ShopController extends bobController {
 
     public function actionCatalog() {
-        if (!Yii::app()->user->checkAccess('shopCatalog')) {
-            echo '<span style="color:red;">' . $this->getId() . ucfirst($this->getAction()->getId()) . '</span>';
-            //Yii::app()->request->redirect(Yii::app()->user->loginUrl);
+        if (!Yii::app()->user->checkAccess('shopCatalog')) {            
+            Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
 
         $products = Product::model()->findAll(
@@ -22,7 +21,7 @@ class ShopController extends bobController {
     public function actionProduct(){        
         
         if (!Yii::app()->user->checkAccess('shopProduct')) {
-            Yii::app()->request->redirect(Yii::app()->user->loginUrl);
+            Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
         $productURL = addslashes($_GET['productURL']);
         $product = Product::model()->find(

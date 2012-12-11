@@ -1,6 +1,6 @@
 <?php
-$this->pageTitle = 'Каталог товаров ' . Yii::app()->name;
-$this->breadcrumbs = array('Каталог товаров',);
+$this->pageTitle = 'Каталог ' . Yii::app()->name;
+$this->breadcrumbs = array('Каталог',);
 ?>
 <h1>Каталог товаров</h1>
 <?php

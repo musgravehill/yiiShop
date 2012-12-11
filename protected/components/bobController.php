@@ -23,7 +23,7 @@ class bobController extends CController {
      */
     public $breadcrumbs = array();
 
-    protected function beforeAction($action) {
+    protected function beforeAction($action) {           
         /*
         if (Yii::app()->user->checkAccess($this->getId() . ucfirst($this->getAction()->getId()))) {
             return true;
