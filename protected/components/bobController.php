@@ -24,13 +24,13 @@ class bobController extends CController {
     public $breadcrumbs = array();
 
     protected function beforeAction($action) {
-
+        /*
         if (Yii::app()->user->checkAccess($this->getId() . ucfirst($this->getAction()->getId()))) {
             return true;
         } else { //403 forbidden
             echo '<span style="color:red;">'. $this->getId() . ucfirst($this->getAction()->getId()).'</span>';
             //Yii::app()->request->redirect(Yii::app()->user->loginUrl);
-        }
+        }*/
         //Yii::app()->request->redirect(Yii::app()->user->returnUrl); - url before loginPage
 
         return true;

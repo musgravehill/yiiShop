@@ -81,7 +81,7 @@ class SiteController extends bobController {
     public function actionLogin() {
         
         //если Гость - иди логинься
-        if (!Yii::app()->user->isGuest) { $this->redirect("/index.php?r=site/norights"); } 
+        if (!Yii::app()->user->isGuest) { $this->redirect("/site/norights"); } 
         
         
         $loginForm = new LoginForm;
@@ -97,7 +97,7 @@ class SiteController extends bobController {
             $loginForm->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($loginForm->validate() && $loginForm->login())
-                $this->redirect(Yii::app()->user->returnUrl);
+                $this->redirect(Yii::app()->user->returnUrl);            
             //Yii::app()->request->redirect(Yii::app()->user->returnUrl); - from guideManual
         }
 
@@ -123,34 +123,48 @@ class SiteController extends bobController {
         $auth->clearAll();
         
         //base operation
-        $bizRule = 'return Yii::app()->user->id== $_GET["uid"];';
-        $auth->createTask('siteIndex', 'site Index',$bizRule);  //Controller: $this->getId() . ucfirst($this->getAction()->getId());
+        $bizRule = 'return ( (Yii::app()->user->id == $_GET["uid"]) OR (Yii::app()->user->role == "admin") );';
+        $auth->createTask('siteIndex', 'site Index',$bizRule);
         $auth->createOperation('siteLogin', 'site Login'); 
         $auth->createOperation('siteLogout', 'site Logout'); 
         $auth->createOperation('siteContact', 'site Contact');
         $auth->createOperation('siteCreateRBAC','site CreateRBAC');
+        $auth->createOperation('siteCaptcha', 'site Captcha');
+        
+        //shop
+        $auth->createOperation('shopCatalog', 'shop Catalog');
+        $auth->createOperation('shopProduct', 'shop Product');
         
         //noRights operation        
         $auth->createOperation('siteNorights', 'site Norights');        
 
         //создаем роль для пользователя admin и указываем, какие операции он может выполнять
-        $admin = $auth->createRole('admin');         
+        $admin = $auth->createRole('admin');      
+        $admin->addChild('shopCatalog');
+        $admin->addChild('shopProduct');
+        
         $admin->addChild('siteIndex');  
         $admin->addChild('siteLogin');  
         $admin->addChild('siteLogout');  
         $admin->addChild('siteContact');
         $admin->addChild('siteCreateRBAC');
+        $admin->addChild('siteCaptcha');        
         $admin->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав
 
         //создаем роль user и добавляем операции для неё
-        $client = $auth->createRole('client');         
+        $client = $auth->createRole('client'); 
+        $client->addChild('shopCatalog');
+        $client->addChild('shopProduct');
+        
         $client->addChild('siteIndex');  
         $client->addChild('siteLogin');  
         $client->addChild('siteLogout');
+        $client->addChild('siteCaptcha');
         $client->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав     
         
         //guest default role
-        $guest = $auth->createRole('guest');  
+        $guest = $auth->createRole('guest'); 
+        $guest->addChild('shopCatalog');
         //$guest->addChild('siteIndex');        
         $guest->addChild('siteLogin');   
         $guest->addChild('siteLogout');

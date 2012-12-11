@@ -4,7 +4,7 @@ return array (
   array (
     'type' => 1,
     'description' => 'site Index',
-    'bizRule' => 'return Yii::app()->user->id== $_GET["uid"];',
+    'bizRule' => 'return ( (Yii::app()->user->id == $_GET["uid"]) OR (Yii::app()->user->role == "admin") );',
     'data' => NULL,
   ),
   'siteLogin' => 
@@ -35,6 +35,27 @@ return array (
     'bizRule' => NULL,
     'data' => NULL,
   ),
+  'siteCaptcha' => 
+  array (
+    'type' => 0,
+    'description' => 'site Captcha',
+    'bizRule' => NULL,
+    'data' => NULL,
+  ),
+  'shopCatalog' => 
+  array (
+    'type' => 0,
+    'description' => 'shop Catalog',
+    'bizRule' => NULL,
+    'data' => NULL,
+  ),
+  'shopProduct' => 
+  array (
+    'type' => 0,
+    'description' => 'shop Product',
+    'bizRule' => NULL,
+    'data' => NULL,
+  ),
   'siteNorights' => 
   array (
     'type' => 0,
@@ -50,12 +71,15 @@ return array (
     'data' => NULL,
     'children' => 
     array (
-      0 => 'siteIndex',
-      1 => 'siteLogin',
-      2 => 'siteLogout',
-      3 => 'siteContact',
-      4 => 'siteCreateRBAC',
-      5 => 'siteNorights',
+      0 => 'shopCatalog',
+      1 => 'shopProduct',
+      2 => 'siteIndex',
+      3 => 'siteLogin',
+      4 => 'siteLogout',
+      5 => 'siteContact',
+      6 => 'siteCreateRBAC',
+      7 => 'siteCaptcha',
+      8 => 'siteNorights',
     ),
     'assignments' => 
     array (
@@ -74,10 +98,13 @@ return array (
     'data' => NULL,
     'children' => 
     array (
-      0 => 'siteIndex',
-      1 => 'siteLogin',
-      2 => 'siteLogout',
-      3 => 'siteNorights',
+      0 => 'shopCatalog',
+      1 => 'shopProduct',
+      2 => 'siteIndex',
+      3 => 'siteLogin',
+      4 => 'siteLogout',
+      5 => 'siteCaptcha',
+      6 => 'siteNorights',
     ),
   ),
   'guest' => 
@@ -88,9 +115,10 @@ return array (
     'data' => NULL,
     'children' => 
     array (
-      0 => 'siteLogin',
-      1 => 'siteLogout',
-      2 => 'siteNorights',
+      0 => 'shopCatalog',
+      1 => 'siteLogin',
+      2 => 'siteLogout',
+      3 => 'siteNorights',
     ),
   ),
 );

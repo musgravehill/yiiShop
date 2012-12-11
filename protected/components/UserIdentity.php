@@ -17,7 +17,7 @@ class UserIdentity extends CUserIdentity {
         else {
             $this->_id = $user->id;
             $this->username = $user->username;
-            //$this->setState('role', $user->role);
+            $this->setState('role', $user->role); //for Yii::app()->user->role //in bizRule can use
             $this->errorCode = self::ERROR_NONE;
 
             $auth = Yii::app()->authManager;

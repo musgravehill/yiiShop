@@ -30,20 +30,22 @@ return array(
         'user' => array(
             // enable cookie-based authentication            
             'allowAutoLogin' => true,
-            'loginUrl' => '/index.php?r=site/login',             
-            
+            'loginUrl' => '/site/login',
         ),
         // uncomment the following to enable URLs in path-format
-        /*
-          'urlManager'=>array(
-          'urlFormat'=>'path',
-          'rules'=>array(
-          '<controller:\w+>/<id:\d+>'=>'<controller>/view',
-          '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-          '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-          ),
-          ),
-         */
+
+        'urlManager' => array(
+            'urlFormat' => 'path',
+            'showScriptName' => false,
+            'caseSensitive' => false,
+            'rules' => array(
+                //'<controller:\w+>/<id:\d+>' => '<controller>/view',
+                //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                'catalog' => 'shop/catalog',
+                'product/<productURL:.*>' => 'shop/product',                
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+            ),
+        ),
         /* 'db'=>array(
           'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
           ), */
@@ -56,14 +58,16 @@ return array(
             'password' => 'yiishop',
             'charset' => 'utf8',
             'tablePrefix' => 'yii_',
+            // включить кэширование схем для улучшения производительности
+            'schemaCachingDuration' => 60,
         ),
         'authManager' => array(
             'class' => 'CPhpAuthManager',
-            'defaultRoles'=>array('guest'),
+            'defaultRoles' => array('guest'),
         ),
         'errorHandler' => array(
             // use 'site/error' action to display errors
-            'errorAction' => 'site/error',
+            'errorAction' => '/site/error',
         ),
         'log' => array(
             'class' => 'CLogRouter',
