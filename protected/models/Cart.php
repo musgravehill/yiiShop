@@ -35,12 +35,12 @@ class Cart extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('product_id, user_id, quantity', 'required'),
+            array('product_id, user_id, quantity, session_id', 'required'),
             array('product_id, user_id, quantity', 'numerical', 'integerOnly' => true),
             array('quantity', 'compare', 'operator' => '>', 'compareValue' => '0'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, product_id, user_id, quantity, date_add', 'safe', 'on' => 'search'),
+            array('id, product_id, user_id, quantity, date_add,session_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -64,6 +64,7 @@ class Cart extends CActiveRecord {
             'user_id' => 'UserID',
             'quantity' => 'Quantity',
             'date_add' => 'Date Add',
+            'session_id' => 'SessionID',
         );
     }
 
@@ -82,6 +83,7 @@ class Cart extends CActiveRecord {
         $criteria->compare('user_id', $this->user_id);
         $criteria->compare('quantity', $this->quantity);
         $criteria->compare('date_add', $this->date_add, true);
+        $criteria->compare('session_id', $this->session_id, true);
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
@@ -93,11 +95,13 @@ class Cart extends CActiveRecord {
         return true;
     }
 
-    public function addTocart($postData) {        
-        $postData['user_id'] = Yii::app()->user->id;       
+    public function addTocart($postData) {         
+        $postData['user_id'] = (integer)Yii::app()->user->id; 
+        $postData['session_id'] = session_id();
         $itemInCart = Cart::model()->find(
                 array(
-                    "condition" => " product_id = " . (integer) $postData['product_id'] . " AND user_id = " . (integer) $postData['user_id'] . " ",
+                    "condition" => " product_id = " . (integer) $postData['product_id'] . " AND 
+                        ( user_id = " . (integer) $postData['user_id'] . " OR session_id = '".$postData['session_id']."' )   ",
                     "limit" => 1,
                 )
         );        

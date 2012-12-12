@@ -23,6 +23,11 @@ class ShopController extends Controller {
         if (!Yii::app()->user->checkAccess('shopProduct')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
+        
+        var_dump($_SESSION);       
+        //echo Yii::app()->user->role;
+        //echo strlen(session_id());
+        
         $productURL = addslashes($productURL);
         $product = Product::model()->find(
                 array(
