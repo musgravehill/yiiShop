@@ -29,7 +29,19 @@ class ShopController extends Controller {
                     "condition" => " url = '$productURL' ",                    
                     "limit" => 1,                    
                 )
-        );        
+        );    
+        
+        $Cart = new Cart;
+        if (isset($_POST['addToCart'])) {              
+            if ($Cart->addTocart($_POST['addToCart'])) {                
+                Yii::app()->user->setFlash('successAddToCart', 'Товар добавлен в корзину');                
+            }
+            else{
+                Yii::app()->user->setFlash('errorAddToCart', 'Товар не добавлен в корзину');
+            }
+                
+        }
+        
         
         $this->render('product', array("product"=>$product));
     }
