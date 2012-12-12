@@ -1,6 +1,6 @@
 <?php
 
-class SiteController extends bobController {
+class SiteController extends Controller {
 
     /**
      * Declares class-based actions.
@@ -20,7 +20,12 @@ class SiteController extends bobController {
         );
     }
 
-    public function actionIndex() {        
+    public function actionIndex() {  
+        
+        $post=Product::model()->findByPk(1);
+        $post->name='Owon SDS7102 осциллограф цифровой';          
+        var_dump($post->save());
+        
         $this->render('index');
     }
 
@@ -136,6 +141,17 @@ class SiteController extends bobController {
         //shop
         $auth->createOperation('shopCatalog', 'shop Catalog');
         $auth->createOperation('shopProduct', 'shop Product');
+        
+        //product crud
+        $auth->createOperation('productAdmin', 'product Admin');
+        $auth->createOperation('productCreate', 'product Create');
+        $auth->createOperation('productDelete', 'product Delete');
+        $auth->createOperation('productIndex', 'product Index');
+        $auth->createOperation('productUpdate', 'product Update');
+        $auth->createOperation('productView', 'product View');
+        $auth->createOperation('productPerformAjaxValidation', 'product performAjaxValidation');
+        $auth->createOperation('productLoadModel', 'load product Model');
+        
 
         //noRights operation        
         $auth->createOperation('siteNorights', 'site Norights');
@@ -152,6 +168,17 @@ class SiteController extends bobController {
         $admin->addChild('siteCreateRBAC');
         $admin->addChild('siteCaptcha');
         $admin->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав
+        
+        $admin->addChild('productAdmin');
+        $admin->addChild('productCreate');
+        $admin->addChild('productDelete');
+        $admin->addChild('productIndex');
+        $admin->addChild('productUpdate');
+        $admin->addChild('productView');
+        $admin->addChild('productPerformAjaxValidation');
+        $admin->addChild('productLoadModel');
+        
+        
         //создаем роль user и добавляем операции для неё
         $client = $auth->createRole('client');
         $client->addChild('shopCatalog');
@@ -164,7 +191,9 @@ class SiteController extends bobController {
         $client->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав 
         //    
         //guest default role
-        $guest = $auth->createRole('guest');               
+        $guest = $auth->createRole('guest');  
+        $guest->addChild('shopCatalog');
+        $guest->addChild('shopProduct');
         $guest->addChild('siteLogin');
         $guest->addChild('siteLogout');
         $guest->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав

@@ -1,23 +1,21 @@
 <?php /* @var $this Controller */ ?>
 <?php $this->beginContent('//layouts/main'); ?>
-<div class="span-19">
-	<div id="content">
+<div class="span9">
+	
 		<?php echo $content; ?>
-	</div><!-- content -->
+	
 </div>
-<div class="span-5 last">
-	<div id="sidebar">
-            <h1 style="color:red;">column2<h1>
+<div class="span2">           
 	<?php
 		$this->beginWidget('zii.widgets.CPortlet', array(
-			'title'=>'Operations',
+			'title'=>'Действия:',
 		));
 		$this->widget('zii.widgets.CMenu', array(
 			'items'=>$this->menu,
-			'htmlOptions'=>array('class'=>'operations'),
+			'htmlOptions'=>array('class'=>''),
 		));
 		$this->endWidget();
 	?>
-	</div><!-- sidebar -->
+	
 </div>
 <?php $this->endContent(); ?>

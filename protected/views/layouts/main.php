@@ -44,9 +44,22 @@
                     </ul>  
                     <ul class="nav nav-pills">   
                         <?php if (Yii::app()->user->isGuest) {
-                            echo '<a href="/site/login">Login</a>';
+                            echo '<li><a href="/site/login">Login</a></li>';
                         } ?>		
                     </ul>  
+                    
+                    <ul class="nav nav-pills">   
+                        <?php if (Yii::app()) {
+                            echo '<li><a href="/product/admin">Управление товарами</a></li>';
+                        } ?>		
+                    </ul>  
+                    <ul class="nav nav-pills">   
+                        <?php if (Yii::app()) {
+                            echo '<li><a href="/catalog">Каталог</a></li>';
+                        } ?>		
+                    </ul>  
+                    
+                    
                     <ul class="nav nav-pills"> 
                         <li class="dropdown">  
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Пример <i class="icon-white icon-shopping-cart"></i></a>  

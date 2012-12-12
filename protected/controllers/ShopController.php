@@ -1,6 +1,6 @@
 <?php
 
-class ShopController extends bobController {
+class ShopController extends Controller {
 
     public function actionCatalog() {
         if (!Yii::app()->user->checkAccess('shopCatalog')) {            
@@ -18,12 +18,12 @@ class ShopController extends bobController {
         $this->render('catalog',array("products"=>$products));
     }
     
-    public function actionProduct(){        
+    public function actionProduct($productURL){     
         
         if (!Yii::app()->user->checkAccess('shopProduct')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
-        $productURL = addslashes($_GET['productURL']);
+        $productURL = addslashes($productURL);
         $product = Product::model()->find(
                 array(
                     "condition" => " url = '$productURL' ",                    
