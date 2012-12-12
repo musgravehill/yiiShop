@@ -100,8 +100,13 @@ class Cart extends CActiveRecord {
         $postData['session_id'] = session_id();
         $itemInCart = Cart::model()->find(
                 array(
-                    "condition" => " product_id = " . (integer) $postData['product_id'] . " AND 
-                        ( user_id = " . (integer) $postData['user_id'] . " OR session_id = '".$postData['session_id']."' )   ",
+                    "condition" => " 
+                            (product_id = " . (integer) $postData['product_id'] . ") 
+                        AND 
+                            (      ( user_id = " . (integer) $postData['user_id'] . " AND user_id > 0) 
+                                OR 
+                                   ( session_id = '".$postData['session_id']."' )
+                            )   ",
                     "limit" => 1,
                 )
         );        
