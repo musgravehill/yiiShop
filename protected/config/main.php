@@ -15,25 +15,42 @@ return array(
         'application.components.*',
     ),
     'modules' => array(
-    // uncomment the following to enable the Gii tool
-    
-      'gii'=>array(
-      'class'=>'system.gii.GiiModule',
-      'password'=>'0000',
-      // If removed, Gii defaults to localhost only. Edit carefully to taste.
-      //'ipFilters'=>array('127.0.0.1','::1'),
-      ),
-     
+        // uncomment the following to enable the Gii tool
+
+        'gii' => array(
+            'class' => 'system.gii.GiiModule',
+            'password' => '0000',
+        // If removed, Gii defaults to localhost only. Edit carefully to taste.
+        //'ipFilters'=>array('127.0.0.1','::1'),
+        ),
     ),
     // application components
     'components' => array(
+        'request' => array(
+            'enableCsrfValidation' => true,
+            'enableCookieValidation' => true,
+            'csrfCookie' => array(
+                'httpOnly' => true,                
+            ),
+        ),
+        'session' => array(
+            'class'=>'CHttpSession',
+            'cookieMode' => 'only',
+            'cookieParams' => array(
+                'httponly' => true,
+                'lifetime' => 3600*6,                
+            ),
+            'sessionName' => 'yiishop',
+            'timeout' => 3600,
+            // 'savePath' => '',
+        ),
         'user' => array(
             // enable cookie-based authentication            
             'allowAutoLogin' => true,
             'loginUrl' => '/site/login',
         ),
         // uncomment the following to enable URLs in path-format
- 
+
         'urlManager' => array(
             'urlFormat' => 'path',
             'showScriptName' => false,
@@ -42,10 +59,10 @@ return array(
                 //'<controller:\w+>/<id:\d+>' => '<controller>/view',
                 //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 'catalog' => 'shop/catalog',
-                'catalog/<productURL:.*>' => 'shop/product',                
+                'catalog/<productURL:.*>' => 'shop/product',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
-        ),  
+        ),
         /* 'db'=>array(
           'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
           ), */

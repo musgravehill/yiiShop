@@ -57,8 +57,13 @@ class LoginForm extends CFormModel {
             $this->_identity->authenticate();
         }
         if ($this->_identity->errorCode === UserIdentity::ERROR_NONE) {
+            
+            
+            //before "user->login" and regenerate session_id I have to set user_id in tbl.cart? where sess_id == sess_id()            
+            Cart::model()->setUserIDbySessionIDinCart($this->_identity->getId(),session_id());
+            
             $duration = $this->rememberMe ? 3600 * 24 * 30 : 0; // 30 days
-           // var_dump($this->_identity);
+            
             Yii::app()->user->login($this->_identity, $duration);
             return true;
         }

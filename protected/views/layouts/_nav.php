@@ -52,6 +52,15 @@
                             </ul>  
                         </li>
                     </ul>    
+                    
+                    <div class="btn-group pull-right">
+                        <ul class="nav nav-pills">                               
+                           <li><a href="/shop/mycart">корзина</a></li>                            		
+                        </ul>                         
+                    </div>  
+                    
+                    
+                    
                     <?php
                     if (!Yii::app()->user->isGuest) {
                         echo '

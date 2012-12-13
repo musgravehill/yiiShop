@@ -120,5 +120,34 @@ class Cart extends CActiveRecord {
         $itemInCart->save() ? $result=true : $result=false;
         return $result;       
     }
+    
+    /** call it after Authentificate (i already have user_id) && before user->Login(session_id isnt regenerated yet) */
+    public function setUserIDbySessionIDinCart($user_id,$session_id) {      
+        $criteria = new CDbCriteria;
+        //$criteria->addInCondition( "wall_id" , $wall_ids ) ; // $wall_ids = array ( 1, 2, 3, 4 );
+        $criteria->addCondition("user_id = 0");
+        $criteria->addCondition("session_id = '$session_id'");
+        Cart::model()->updateAll(array('user_id'=>(integer)$user_id), $criteria);       
+        return true;       
+    }
+    
+    public function viewMyCart($user_id,$session_id){
+        $db = Yii::app()->db;
+        $cart_table = Cart::tableName();
+        $product_table = Product::model()->tableName();
+ 
+        $sql = "SELECT * FROM {$cart_table},{$product_table} WHERE
+            {$cart_table}.product_id = {$product_table}.id     AND      
+            (      ( {$cart_table}.user_id =:user_id AND user_id > 0) 
+                OR 
+                    ( {$cart_table}.session_id =:session_id )
+            )            
+            LIMIT 1000";
+        $command=$db->createCommand($sql);
+        $command->bindParam(":user_id",$user_id,PDO::PARAM_INT);
+        $command->bindParam(":session_id",$session_id,PDO::PARAM_STR);
+        $rows=$command->queryAll();        
+        return $rows;
+    }
 
 }

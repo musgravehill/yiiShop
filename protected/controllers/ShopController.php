@@ -3,7 +3,7 @@
 class ShopController extends Controller {
 
     public function actionCatalog() {
-        if (!Yii::app()->user->checkAccess('shopCatalog')) {            
+        if (!Yii::app()->user->checkAccess('shopCatalog')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
 
@@ -11,44 +11,53 @@ class ShopController extends Controller {
                 array(
                     "condition" => " stock = 1 ",
                     "order" => "price", //rand()
-                    "limit" => 10,                    
+                    "limit" => 10,
                 )
         );
 
-        $this->render('catalog',array("products"=>$products));
+        $this->render('catalog', array("products" => $products));
     }
-    
-    public function actionProduct($productURL){     
-        
+
+    public function actionProduct($productURL) {
+
         if (!Yii::app()->user->checkAccess('shopProduct')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
-        
-        var_dump($_SESSION);       
+
+        //var_dump($_SESSION);       
         //echo Yii::app()->user->role;
         //echo strlen(session_id());
-        
+
         $productURL = addslashes($productURL);
         $product = Product::model()->find(
                 array(
-                    "condition" => " url = '$productURL' ",                    
-                    "limit" => 1,                    
+                    "condition" => " url = '$productURL' ",
+                    "limit" => 1,
                 )
-        );    
-        
+        );
+
         $Cart = new Cart;
-        if (isset($_POST['addToCart'])) {              
-            if ($Cart->addTocart($_POST['addToCart'])) {                
-                Yii::app()->user->setFlash('successAddToCart', 'Товар добавлен в корзину');                
-            }
-            else{
+        if (isset($_POST['addToCart'])) {
+            if ($Cart->addTocart($_POST['addToCart'])) {
+                Yii::app()->user->setFlash('successAddToCart', 'Товар добавлен в корзину');
+            } else {
                 Yii::app()->user->setFlash('errorAddToCart', 'Товар не добавлен в корзину');
             }
-                
         }
-        
-        
-        $this->render('product', array("product"=>$product));
+        $this->render('product', array("product" => $product));
+    }
+
+    public function actionMycart() {
+        if (!Yii::app()->user->checkAccess('myCart')) {
+            Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
+        }
+        if (Yii::app()->user->isGuest) {            
+            $myCart = Cart::model()->viewMyCart(0,session_id());
+        } else {            
+            $myCart = Cart::model()->viewMyCart(Yii::app()->user->id,0);
+        }
+
+        $this->render('mycart', array("myCart" => $myCart));
     }
 
 }

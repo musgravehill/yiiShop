@@ -20,12 +20,7 @@ class SiteController extends Controller {
         );
     }
 
-    public function actionIndex() {  
-        
-        $post=Product::model()->findByPk(1);
-        $post->name='Owon SDS7102 осциллограф цифровой';          
-        var_dump($post->save());
-        
+    public function actionIndex() {
         $this->render('index');
     }
 
@@ -33,7 +28,7 @@ class SiteController extends Controller {
 
         $this->render('norights');
     }
-    
+
     public function actionError() {
         if ($error = Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest)
@@ -47,11 +42,11 @@ class SiteController extends Controller {
      * Displays the contact page
      */
     public function actionContact() {
-        if (!Yii::app()->user->checkAccess('siteContact')) {            
+        if (!Yii::app()->user->checkAccess('siteContact')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
-        
-        
+
+
         $model = new ContactForm;
         if (isset($_POST['ContactForm'])) {
             $model->attributes = $_POST['ContactForm'];
@@ -95,7 +90,7 @@ class SiteController extends Controller {
             $loginForm->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($loginForm->validate() && $loginForm->login())
-                $this->redirect(Yii::app()->user->returnUrl);           
+                $this->redirect(Yii::app()->user->returnUrl);
         }
 
 
@@ -113,10 +108,10 @@ class SiteController extends Controller {
 
     //TODO DELETE this after using
     public function actionCreateRBAC() {
-        if (!Yii::app()->user->checkAccess('siteCreateRBAC')) {            
+        if (!Yii::app()->user->checkAccess('siteCreateRBAC')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
-        
+
         /*
          *  В каждом контроллере делаю "checkAccess". Если нельзя, то вызываю функцию "Yii::app()->user->loginRequired();"
          *  Благодаря этой функции в "Yii::app()->user->returnUrl"  записывается предыдущуя страница, которая вызвала проверку прав.
@@ -141,7 +136,8 @@ class SiteController extends Controller {
         //shop
         $auth->createOperation('shopCatalog', 'shop Catalog');
         $auth->createOperation('shopProduct', 'shop Product');
-        
+        $auth->createOperation('myCart', 'my Cart');        
+
         //product crud
         $auth->createOperation('productAdmin', 'product Admin');
         $auth->createOperation('productCreate', 'product Create');
@@ -151,7 +147,7 @@ class SiteController extends Controller {
         $auth->createOperation('productView', 'product View');
         $auth->createOperation('productPerformAjaxValidation', 'product performAjaxValidation');
         $auth->createOperation('productLoadModel', 'load product Model');
-        
+
 
         //noRights operation        
         $auth->createOperation('siteNorights', 'site Norights');
@@ -160,6 +156,7 @@ class SiteController extends Controller {
         $admin = $auth->createRole('admin');
         $admin->addChild('shopCatalog');
         $admin->addChild('shopProduct');
+        $admin->addChild('myCart');
 
         $admin->addChild('siteIndex');
         $admin->addChild('siteLogin');
@@ -168,7 +165,7 @@ class SiteController extends Controller {
         $admin->addChild('siteCreateRBAC');
         $admin->addChild('siteCaptcha');
         $admin->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав
-        
+
         $admin->addChild('productAdmin');
         $admin->addChild('productCreate');
         $admin->addChild('productDelete');
@@ -177,12 +174,13 @@ class SiteController extends Controller {
         $admin->addChild('productView');
         $admin->addChild('productPerformAjaxValidation');
         $admin->addChild('productLoadModel');
-        
-        
+
+
         //создаем роль user и добавляем операции для неё
         $client = $auth->createRole('client');
         $client->addChild('shopCatalog');
         $client->addChild('shopProduct');
+        $client->addChild('myCart');
 
         $client->addChild('siteIndex');
         $client->addChild('siteLogin');
@@ -191,9 +189,11 @@ class SiteController extends Controller {
         $client->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав 
         //    
         //guest default role
-        $guest = $auth->createRole('guest');  
+        $guest = $auth->createRole('guest');
         $guest->addChild('shopCatalog');
         $guest->addChild('shopProduct');
+        $guest->addChild('myCart');
+        
         $guest->addChild('siteLogin');
         $guest->addChild('siteLogout');
         $guest->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав
