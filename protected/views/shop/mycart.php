@@ -20,7 +20,8 @@
     }
     
     ?>
-</table>
+</table>    
+   <?php $this->renderPartial('//shop/_clearCart'); ?>
 </div>
 
 

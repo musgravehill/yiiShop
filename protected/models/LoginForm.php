@@ -57,14 +57,18 @@ class LoginForm extends CFormModel {
             $this->_identity->authenticate();
         }
         if ($this->_identity->errorCode === UserIdentity::ERROR_NONE) {
-            
-            
             //before "user->login" and regenerate session_id I have to set user_id in tbl.cart? where sess_id == sess_id()            
-            Cart::model()->setUserIDbySessionIDinCart($this->_identity->getId(),session_id());
-            
+            Cart::model()->setUserIDbySessionIDinCart($this->_identity->getId(), session_id());
+
             $duration = $this->rememberMe ? 3600 * 24 * 30 : 0; // 30 days
-            
             Yii::app()->user->login($this->_identity, $duration);
+
+            //user add product to cart by UserID. Then LogOut and add to cart the same product by SessionID. 
+            //And then Login - SessionID bind with UserID. User has double product. To prevent this ->
+            if (!Yii::app()->user->isGuest) {
+                Cart::model()->mergeCart(Yii::app()->user->id);
+            }
+
             return true;
         }
         else

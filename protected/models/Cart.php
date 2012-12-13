@@ -95,8 +95,8 @@ class Cart extends CActiveRecord {
         return true;
     }
 
-    public function addTocart($postData) {         
-        $postData['user_id'] = (integer)Yii::app()->user->id; 
+    public function addTocart($postData) {
+        $postData['user_id'] = (integer) Yii::app()->user->id;
         $postData['session_id'] = session_id();
         $itemInCart = Cart::model()->find(
                 array(
@@ -105,37 +105,36 @@ class Cart extends CActiveRecord {
                         AND 
                             (      ( user_id = " . (integer) $postData['user_id'] . " AND user_id > 0) 
                                 OR 
-                                   ( session_id = '".$postData['session_id']."' )
+                                   ( session_id = '" . $postData['session_id'] . "' )
                             )   ",
                     "limit" => 1,
                 )
-        );        
-        if (isset($itemInCart)) {            
-            $itemInCart->quantity += $postData['quantity'];            
+        );
+        if (isset($itemInCart)) {
+            $itemInCart->quantity += $postData['quantity'];
+        } else {
+            $itemInCart = new Cart();
+            $itemInCart->attributes = $postData;
         }
-        else{
-            $itemInCart = new Cart();            
-            $itemInCart->attributes = $postData;            
-        }            
-        $itemInCart->save() ? $result=true : $result=false;
-        return $result;       
+        $itemInCart->save() ? $result = true : $result = false;
+        return $result;
     }
-    
+
     /** call it after Authentificate (i already have user_id) && before user->Login(session_id isnt regenerated yet) */
-    public function setUserIDbySessionIDinCart($user_id,$session_id) {      
+    public function setUserIDbySessionIDinCart($user_id, $session_id) {
         $criteria = new CDbCriteria;
         //$criteria->addInCondition( "wall_id" , $wall_ids ) ; // $wall_ids = array ( 1, 2, 3, 4 );
         $criteria->addCondition("user_id = 0");
         $criteria->addCondition("session_id = '$session_id'");
-        Cart::model()->updateAll(array('user_id'=>(integer)$user_id), $criteria);       
-        return true;       
+        Cart::model()->updateAll(array('user_id' => (integer) $user_id), $criteria);
+        return true;
     }
-    
-    public function viewMyCart($user_id,$session_id){
+
+    public function viewMyCart($user_id, $session_id) {
         $db = Yii::app()->db;
         $cart_table = Cart::tableName();
         $product_table = Product::model()->tableName();
- 
+
         $sql = "SELECT * FROM {$cart_table},{$product_table} WHERE
             {$cart_table}.product_id = {$product_table}.id     AND      
             (      ( {$cart_table}.user_id =:user_id AND user_id > 0) 
@@ -143,11 +142,39 @@ class Cart extends CActiveRecord {
                     ( {$cart_table}.session_id =:session_id )
             )            
             LIMIT 1000";
-        $command=$db->createCommand($sql);
-        $command->bindParam(":user_id",$user_id,PDO::PARAM_INT);
-        $command->bindParam(":session_id",$session_id,PDO::PARAM_STR);
-        $rows=$command->queryAll();        
+        $command = $db->createCommand($sql);
+        $command->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+        $command->bindParam(":session_id", $session_id, PDO::PARAM_STR);
+        $rows = $command->queryAll();
         return $rows;
+    }
+
+    //user add product to cart by UserID. Then LogOut and add to cart the same product by SessionID. 
+    //And then Login - SessionID bind with UserID. User has double product. To prevent this ->
+    public function mergeCart($user_id) {
+        //select summary by user_id
+        $db = Yii::app()->db;
+        $cart_table = Cart::tableName();
+        $sql = "SELECT *, SUM(quantity) as sum_quantity FROM {$cart_table} WHERE            
+            {$cart_table}.user_id =:user_id    
+            GROUP BY product_id ";
+        $command = $db->createCommand($sql);
+        $command->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+        $summaryCart = $command->queryAll();
+        //clear cart
+        Cart::model()->deleteAll('user_id = ? ', array((integer) $user_id));
+        //insert summary information
+        foreach ($summaryCart as $item) {
+            $Cart = new Cart();
+            $item['quantity'] = $item['sum_quantity'];
+            $Cart->attributes = $item;
+            $Cart->save();
+        }
+        return true;
+    }
+    
+    public function clearCart($user_id) {
+        Cart::model()->deleteAll('user_id = ? ', array((integer) $user_id));
     }
 
 }

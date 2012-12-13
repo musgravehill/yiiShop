@@ -24,9 +24,7 @@ class ShopController extends Controller {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
 
-        //var_dump($_SESSION);       
-        //echo Yii::app()->user->role;
-        //echo strlen(session_id());
+             
 
         $productURL = addslashes($productURL);
         $product = Product::model()->find(
@@ -51,11 +49,16 @@ class ShopController extends Controller {
         if (!Yii::app()->user->checkAccess('myCart')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
+        
+        if ( (isset($_POST['clearCart'])) && (!Yii::app()->user->isGuest) ) {
+            Cart::model()->clearCart(Yii::app()->user->id);
+        }        
+        
         if (Yii::app()->user->isGuest) {            
             $myCart = Cart::model()->viewMyCart(0,session_id());
         } else {            
             $myCart = Cart::model()->viewMyCart(Yii::app()->user->id,0);
-        }
+        }            
 
         $this->render('mycart', array("myCart" => $myCart));
     }
