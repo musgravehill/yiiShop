@@ -16,6 +16,7 @@
                     <ul class="nav nav-pills">   
                         <?php if (Yii::app()->user->isGuest) {
                             echo '<li><a href="/site/login">Login</a></li>';
+                            echo '<li><a href="/site/register">Регистрация</a></li>';
                         } ?>		
                     </ul>  
                     

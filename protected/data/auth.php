@@ -179,6 +179,39 @@ return array (
       6 => 'siteCaptcha',
       7 => 'siteNorights',
     ),
+    'assignments' => 
+    array (
+      47 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+      48 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+      49 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+      50 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+      51 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+      52 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+    ),
   ),
   'guest' => 
   array (

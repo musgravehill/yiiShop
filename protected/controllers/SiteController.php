@@ -10,7 +10,11 @@ class SiteController extends Controller {
             // captcha action renders the CAPTCHA image displayed on the contact page
             'captcha' => array(
                 'class' => 'CCaptchaAction',
-                'backColor' => 0xFFFFFF,
+                'backColor' => 0xFFFFFF,   
+                'height' => 50,
+                'minLength' => 2,
+                'maxLength'=> 4,
+                'offset' => -3,
             ),
             // page action renders "static" pages stored under 'protected/views/site/pages'
             // They can be accessed via: index.php?r=site/page&view=FileName
@@ -133,10 +137,12 @@ class SiteController extends Controller {
         $auth->createOperation('siteCreateRBAC', 'site CreateRBAC');
         $auth->createOperation('siteCaptcha', 'site Captcha');
 
+        $auth->createOperation('changeUserRole', 'change UserRole');
+
         //shop
         $auth->createOperation('shopCatalog', 'shop Catalog');
         $auth->createOperation('shopProduct', 'shop Product');
-        $auth->createOperation('myCart', 'my Cart');        
+        $auth->createOperation('myCart', 'my Cart');
 
         //product crud
         $auth->createOperation('productAdmin', 'product Admin');
@@ -157,6 +163,8 @@ class SiteController extends Controller {
         $admin->addChild('shopCatalog');
         $admin->addChild('shopProduct');
         $admin->addChild('myCart');
+
+        $admin->addChild('changeUserRole');
 
         $admin->addChild('siteIndex');
         $admin->addChild('siteLogin');
@@ -193,7 +201,7 @@ class SiteController extends Controller {
         $guest->addChild('shopCatalog');
         $guest->addChild('shopProduct');
         $guest->addChild('myCart');
-        
+
         $guest->addChild('siteLogin');
         $guest->addChild('siteLogout');
         $guest->addChild('siteNorights'); //сюда будем редиректить, если не хватает прав
@@ -202,6 +210,29 @@ class SiteController extends Controller {
         $auth->save();
 
         $this->render('CreateRBAC');
+    }
+
+    public function actionRegister() {
+        $model = new User('register');
+        $regReady = false;
+
+        // uncomment the following code to enable ajax-based validation
+
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'user-register-form') {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+
+
+        if (isset($_POST['User'])) {
+            $_POST['User']['role'] = 'register';
+            $model->attributes = $_POST['User'];
+            if ($model->validate()) {
+                $model->save();
+                $regReady = true;
+            }
+        }
+        $this->render('register', array('model' => $model, 'regReady' => $regReady));
     }
 
 }

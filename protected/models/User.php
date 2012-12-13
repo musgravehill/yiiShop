@@ -4,6 +4,7 @@ class User extends CActiveRecord {
 
     const ROLE_CLIENT = 'client';
     const ROLE_ADMIN = 'admin';
+    public $verifyCode;
 
     /**
      * The followings are the available columns in table 'tbl_user':
@@ -41,10 +42,11 @@ class User extends CActiveRecord {
             array('email', 'unique'),
             array('role', 'safe'), //http://phptime.ru/blog/yii/23.html			
             array('email', 'email'),
-            array('password', 'length', 'min' => 5),
+            array('password', 'length', 'min' => 3),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('username, password, email, role', 'safe', 'on' => 'search'),
+            array('verifyCode', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements(),'on'=>'register'),
         );
     }
 
@@ -54,7 +56,7 @@ class User extends CActiveRecord {
      * @return boolean whether the password is valid
      */
     public function validatePassword($password) {
-        return $this->hashPassword($password, $this->username) === $this->password;
+        return $this->hashPassword($password, $this->email) === $this->password;
     }
 
     /**
@@ -67,24 +69,22 @@ class User extends CActiveRecord {
         return md5($password . $salt);
     }
 
-    //////////////////////TODO//////////////////////////////////////////
     public function beforeSave() {
         parent::beforeSave();
-        $this->u_pass = md5($this->u_pass . $this->username);
-
-        if (!Yii::app()->user->checkAccess('changeRole')) {
-            if ($this->isNewRecord) {
-                $this->u_role = Users::ROLE_CLIENT;
-            }
+        $this->password = md5($this->password . $this->email);
+        if (!Yii::app()->user->checkAccess('changeUserRole')) {
+            //if ($this->isNewRecord) { }
+            $this->role = User::ROLE_CLIENT;
         }
+        if ($this->role == 'register') {$this->role = User::ROLE_CLIENT;}
         return true;
     }
 
     public function afterSave() {
         parent::afterSave();
         $auth = Yii::app()->authManager;
-        $auth->revoke(null, $this->u_id);
-        $auth->assign($this->u_role, $this->u_id);
+        $auth->revoke(null, $this->id);
+        $auth->assign($this->role, $this->id);
         $auth->save();
         return true;
     }
@@ -92,7 +92,7 @@ class User extends CActiveRecord {
     public function beforeDelete() {
         parent::beforeDelete();
         $auth = Yii::app()->authManager;
-        $auth->revoke($this->u_role, $this->u_id);
+        $auth->revoke($this->role, $this->id);
         $auth->save();
         return true;
     }

@@ -58,8 +58,8 @@ class ShopController extends Controller {
             $myCart = Cart::model()->viewMyCart(0,session_id());
         } else {            
             $myCart = Cart::model()->viewMyCart(Yii::app()->user->id,0);
-        }            
-
+        }   
+        
         $this->render('mycart', array("myCart" => $myCart));
     }
 

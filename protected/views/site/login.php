@@ -20,34 +20,31 @@ $this->breadcrumbs=array(
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 	),
+        'htmlOptions' => array('class'=>'form-horizontal span6 well',),
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username'); ?>
-		<?php echo $form->error($model,'username'); ?>
-	</div>
+	
+		<?php echo $form->labelEx($model,'email',array('class'=>'span1')); ?>
+		<?php echo $form->textField($model,'email',array('class'=>'span2')); ?>
+		<?php echo $form->error($model,'email',array('class'=>'pull-right label label-important')); ?>
+	<br>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password'); ?>
-		<?php echo $form->error($model,'password'); ?>
-		<p class="hint">
-			Hint: You may login with <kbd>demo</kbd>/<kbd>demo</kbd> or <kbd>admin</kbd>/<kbd>admin</kbd>.
-		</p>
-	</div>
-
-	<div class="row rememberMe">
-		<?php echo $form->checkBox($model,'rememberMe'); ?>
-		<?php echo $form->label($model,'rememberMe'); ?>
-		<?php echo $form->error($model,'rememberMe'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton('Login'); ?>
-	</div>
+	
+		<?php echo $form->labelEx($model,'password',array('class'=>'span1')); ?>
+		<?php echo $form->passwordField($model,'password',array('class'=>'span2')); ?>
+		<?php echo $form->error($model,'password',array('class'=>'pull-right label label-important')); ?>
+		
+	<br>
+		<?php echo $form->checkBox($model,'rememberMe',array('class'=>'span1')); ?>
+		<?php echo $form->label($model,'rememberMe',array('class'=>'span2')); ?>
+		<?php echo $form->error($model,'rememberMe',array('class'=>'pull-right label label-important')); ?>
+	
+<br><br>
+	
+		<?php echo CHtml::submitButton('Login',array('class'=>'btn btn-success')); ?>
+	
 
 <?php $this->endWidget(); ?>
 </div><!-- form -->
