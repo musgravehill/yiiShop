@@ -27,7 +27,7 @@
     </style>
 
     <body>        
-        <?php $this->renderPartial('//layouts/_nav',array()); ?>
+        <?php $this->renderPartial('//layouts/_nav', array()); ?>
 
         <div class="container"> 
             <div class="row">
@@ -37,19 +37,25 @@
                         'homeLink' => CHtml::link('Главная', '/'),
                         'separator' => ' &rarr; ',
                         'links' => $this->breadcrumbs,
+                        'tagName' => 'ul',
+                        'activeLinkTemplate'=>'<li><a href="{url}">{label}</a></li>',
+                        'inactiveLinkTemplate'=>'<li>{label}</li>',
+                        'htmlOptions' => array(
+                            'class' => 'breadcrumb',
+                        ),
                     ));
                     ?><!-- breadcrumbs -->
-<?php endif ?>
+                <?php endif ?>
             </div>      
 
-<?php echo $content; ?>		
+            <?php echo $content; ?>		
 
             <footer class='modal-footer' id='footer'>
                 <div class="nav-collapse">            
                     <span class='span5'>
                         Copyright &copy; <?php echo date('Y'); ?> by Bob
-<?php echo '     ' . round((memory_get_usage() / 1024 / 1024), 2) . ' Mb'; ?>
-<?php echo Yii::powered(); ?>
+                        <?php echo '     ' . round((memory_get_usage() / 1024 / 1024), 2) . ' Mb'; ?>
+                        <?php echo Yii::powered(); ?>
                     </span>
                 </div>
                 <span class='span3' style='font-size: 24px;'>

@@ -135,7 +135,7 @@ class Cart extends CActiveRecord {
         $cart_table = Cart::tableName();
         $product_table = Product::model()->tableName();
 
-        $sql = "SELECT * FROM {$cart_table},{$product_table} WHERE
+        $sql = "SELECT *, {$cart_table}.id as cart_id FROM {$cart_table},{$product_table} WHERE
             {$cart_table}.product_id = {$product_table}.id     AND      
             (      ( {$cart_table}.user_id =:user_id AND user_id > 0) 
                 OR 

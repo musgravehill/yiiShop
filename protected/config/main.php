@@ -30,19 +30,19 @@ return array(
             'enableCsrfValidation' => true,
             'enableCookieValidation' => true,
             'csrfCookie' => array(
-                'httpOnly' => true,                
+                'httpOnly' => true,
             ),
         ),
         'session' => array(
-            'class'=>'CHttpSession',
+            'class' => 'CHttpSession',
             'cookieMode' => 'only',
             'cookieParams' => array(
                 'httponly' => true,
-                'lifetime' => 3600*6,                
+                'lifetime' => 3600 * 6,
             ),
             'sessionName' => 'yiishop',
             'timeout' => 3600,
-            // 'savePath' => '',
+        // 'savePath' => '',
         ),
         'user' => array(
             // enable cookie-based authentication            
@@ -67,6 +67,13 @@ return array(
           'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
           ), */
         // uncomment the following to use a MySQL database
+        'cache'=>array(
+            'class'=>'system.caching.CMemCache',
+            'servers'=>array(
+                array('host'=>'127.0.0.1', 'port'=>11211, 'weight'=>60),
+                //array('host'=>'server2', 'port'=>11211, 'weight'=>40),
+            ),
+        ),
 
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=yiishop',
@@ -77,6 +84,8 @@ return array(
             'tablePrefix' => 'yii_',
             // включить кэширование схем для улучшения производительности
             'schemaCachingDuration' => 60,
+            'enableProfiling' => true,
+            'enableParamLogging' => true,
         ),
         'authManager' => array(
             'class' => 'CPhpAuthManager',
@@ -88,19 +97,22 @@ return array(
         ),
         'log' => array(
             'class' => 'CLogRouter',
-            'routes' => array(
-                array(
-                    'class' => 'CFileLogRoute',
-                    'levels' => 'error, warning',
-                ),
-            // uncomment the following to show log messages on web pages
-            /*
-              array(
-              'class'=>'CWebLogRoute',
-              ),
-             */
+            'routes' => array(                
+                array(  //sql                   
+                    'class' => 'CProfileLogRoute',                    
+                    'levels' => 'profile,',  
+                    'enabled' => true,
+                ),  /*
+                array(  //application stack
+                    'class' => 'CWebLogRoute',
+                ), */
             ),
         ),
+        
+            
+           
+            
+       
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
