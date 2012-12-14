@@ -14,7 +14,7 @@
         $summaryPrice += $item['quantity']*$item['price'];
         echo'
     <tr>
-        <td>'.$item['name'].'</td>
+        <td><a href="/catalog/'.$item['url'].'" target="_blank">'.$item['name'].'</a></td>
         <td>'.$item['quantity'].'</td>
         <td>'.$item['price'].'</td>
         <td>'.$item['quantity']*$item['price'].'</td> 
