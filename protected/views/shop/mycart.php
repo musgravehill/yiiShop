@@ -14,7 +14,7 @@
         $summaryPrice += $item['quantity']*$item['price'];
         echo'
     <tr>
-        <td><a href="/catalog/'.$item['url'].'" target="_blank">'.$item['name'].'</a></td>
+        <td><a href="'.($this->createUrl("product/viewproduct",array('productURL'=>$item['url']))).'" target="_blank">'.$item['name'].'</a></td>
         <td>'.$item['quantity'].'</td>
         <td>'.$item['price'].'</td>
         <td>'.$item['quantity']*$item['price'].'</td> 
