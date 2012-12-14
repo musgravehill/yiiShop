@@ -22,7 +22,7 @@
                     
                     <ul class="nav nav-pills">   
                         <?php if (Yii::app()) {
-                            echo '<li><a href="/product/admin">Управление товарами</a></li>';
+                            echo '<li><a href="/productmanager/admin">Управление товарами</a></li>';
                         } ?>		
                     </ul>  
                     <ul class="nav nav-pills">   

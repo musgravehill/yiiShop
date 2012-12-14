@@ -55,7 +55,7 @@ class ShopController extends Controller {
         }
 
         if ((isset($_POST['deleteFromCart'])) && (!Yii::app()->user->isGuest)) {
-            Cart::model()->deleteByPk((integer)$_POST['deleteFromCart']['cart_id'], "user_id = ?", array(Yii::app()->user->id));
+            Cart::model()->deleteByPk((integer) $_POST['deleteFromCart']['cart_id'], "user_id = ?", array(Yii::app()->user->id));
         }
 
         if (Yii::app()->user->isGuest) {

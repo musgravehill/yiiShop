@@ -11,7 +11,7 @@ echo '
         </div>
        ';
 
-$this->renderPartial('//shop/_addToCart', array('product_id' => $product->id));
+$this->renderPartial('//product/_addToCart', array('product_id' => $product->id));
 
 if (Yii::app()->user->hasFlash('successAddToCart')) {
     echo '<div class="alert alert-success span2">

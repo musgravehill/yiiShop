@@ -58,8 +58,8 @@ return array(
             'rules' => array(
                 //'<controller:\w+>/<id:\d+>' => '<controller>/view',
                 //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                'catalog' => 'shop/catalog',
-                'catalog/<productURL:.*>' => 'shop/product',
+                'catalog' => 'catalog/viewcatalog',
+                'catalog/<productURL:.*>' => 'product/viewproduct',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
         ),
