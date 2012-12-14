@@ -1,6 +1,6 @@
 <?php
 
-class ProductController extends Controller {    
+class ProductController extends Controller {
 
     public function actionViewProduct($productURL) {
 
@@ -9,11 +9,9 @@ class ProductController extends Controller {
         }
 
         $productURL = addslashes($productURL);
-        $product = Product::model()->find(
-                array(
-                    "condition" => " url = '$productURL' ",                  
-                )
-        );
+        if (!($product = Product::model()->find(array("condition" => " url = '$productURL' ", ) ))) {
+            throw new CHttpException(404, 'Товар не найден');
+        }
 
         $Cart = new Cart;
         if (isset($_POST['addToCart'])) {
@@ -24,6 +22,6 @@ class ProductController extends Controller {
             }
         }
         $this->render('viewproduct', array("product" => $product));
-    }   
+    }
 
 }

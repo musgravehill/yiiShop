@@ -34,7 +34,7 @@
                     
                     <ul class="nav nav-pills"> 
                         <li class="dropdown">  
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Пример <i class="icon-white icon-shopping-cart"></i></a>  
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Пример <i class="icon-white icon-ok"></i></a>  
                             <ul class="dropdown-menu">  
                                 <li><a href="">чоткакт</a></li>
                                 <li><a href="">чоткакт2</a></li>
@@ -54,11 +54,6 @@
                         </li>
                     </ul>    
                     
-                    <div class="btn-group pull-right">
-                        <ul class="nav nav-pills">                               
-                           <li><a href="/shop/mycart">корзина</a></li>                            		
-                        </ul>                         
-                    </div>  
                     
                     
                     
@@ -79,6 +74,14 @@
                         ';
                     }
                     ?>
+                    
+                    <ul class="nav nav-pills pull-right">  
+                        <li>
+                        <a class="" href="/shop/mycart" >                        
+                               <i class="icon-white icon-shopping-cart"></i>Корзина 
+                        </a> 
+                       </li>
+                    </ul>
 
 
                 </div>

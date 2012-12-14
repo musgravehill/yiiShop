@@ -52,10 +52,9 @@
 
             <footer class='modal-footer' id='footer'>
                 <div class="nav-collapse">            
-                    <span class='span5'>
-                        Copyright &copy; <?php echo date('Y'); ?> by Bob
-                        <?php echo '     ' . round((memory_get_usage() / 1024 / 1024), 2) . ' Mb'; ?>
-                        <?php echo Yii::powered(); ?>
+                    <span class='span5'>                        
+                        <?php echo '<span class="label label-info">' . round((memory_get_usage() / 1024 / 1024), 2) . ' Mb</span>'; ?>
+                        <?php echo '<span class="label">yii '.Yii::getVersion().'</span>'; ?>
                     </span>
                 </div>
                 <span class='span3' style='font-size: 24px;'>
