@@ -19,7 +19,9 @@
                             echo '<li><a href="/site/register">'.Yii::t("navMenu","Register").'</a></li>';
                         } ?>		
                     </ul>  
-                    
+                    <ul class="nav nav-pills"> 
+                    <li><a href="/site/SetLanguage"><?php echo Yii::t("navMenu","Language"); ?></a></li>
+                    </ul> 
                     <ul class="nav nav-pills">   
                         <?php if (Yii::app()) {
                             echo '<li><a href="/productmanager/admin">'.Yii::t("navMenu","Goods manager").'</a></li>';

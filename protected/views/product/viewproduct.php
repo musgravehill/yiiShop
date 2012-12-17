@@ -1,7 +1,7 @@
 <?php
 
 $this->pageTitle = $product->name;
-$this->breadcrumbs = array('Каталог' => array('/catalog'), $product->name);
+$this->breadcrumbs = array('Каталог' => array('/catalog'), $product->name); 
 echo '
         <div class="span5">
             <h1>' . $product->name . '</a></h1>

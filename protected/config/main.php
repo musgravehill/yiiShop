@@ -7,6 +7,9 @@
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'yiiShop',
+    'theme' => 'twitt', //only layots there  //twitt or metro     
+    'sourceLanguage' => 'en',
+    'language' => 'en',
     // preloading 'log' component
     'preload' => array('log'),
     // autoloading model and component classes
@@ -58,7 +61,7 @@ return array(
             'rules' => array(
                 //'<controller:\w+>/<id:\d+>' => '<controller>/view',
                 //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                'catalog' => 'catalog/viewcatalog',
+                'catalog' => 'catalog/viewcatalog',  //<lang:(en|de|ru)>
                 'catalog/<productURL:.*>' => 'product/viewproduct',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
@@ -67,14 +70,13 @@ return array(
           'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
           ), */
         // uncomment the following to use a MySQL database
-        'cache'=>array(
-            'class'=>'system.caching.CMemCache',
-            'servers'=>array(
-                array('host'=>'127.0.0.1', 'port'=>11211, 'weight'=>60),
-                //array('host'=>'server2', 'port'=>11211, 'weight'=>40),
+        'cache' => array(
+            'class' => 'system.caching.CMemCache',
+            'servers' => array(
+                array('host' => '127.0.0.1', 'port' => 11211, 'weight' => 60),
+            //array('host'=>'server2', 'port'=>11211, 'weight'=>40),
             ),
         ),
-
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=yiishop',
             'emulatePrepare' => true,
@@ -97,27 +99,28 @@ return array(
         ),
         'log' => array(
             'class' => 'CLogRouter',
-            'routes' => array(                
-                array(  //sql                   
-                    'class' => 'CProfileLogRoute',                    
-                    'levels' => 'profile,',  
+            'routes' => array(
+                array(//sql                   
+                    'class' => 'CProfileLogRoute',
+                    'levels' => 'profile,',
                     'enabled' => true,
-                ),  /*
-                array(  //application stack
-                    'class' => 'CWebLogRoute',
-                ), */
+                ), /*
+              array(  //application stack
+              'class' => 'CWebLogRoute',
+              ), */
             ),
+        ),        
+        'messages' => array(
+            'class' => 'CPhpMessageSource',
+            //'basePath'=> null, //'basePath' => realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'messages/ru'),
+            //'cachingDuration' => 100,
         ),
-        
-            
-           
-            
-       
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
     'params' => array(
         // this is used in contact page
         'adminEmail' => 'mdeed@mail.ru',
+        'languages'=>array('en'=>'English', 'ru'=>'Русский'),
     ),
 );

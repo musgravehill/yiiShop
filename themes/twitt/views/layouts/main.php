@@ -2,11 +2,11 @@
 <html>
     <head>
         <meta charset='UTF-8'>
-        <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon.png" > 
-        <link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.css"> 
-        <link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-responsive.css">  
-        <script src='<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-1.7.min.js'></script>
-        <script src='<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap.js'></script> 
+        <link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/images/favicon.png" > 
+        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/bootstrap.css"> 
+        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/bootstrap-responsive.css">  
+        <script src='<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery-1.7.min.js'></script>
+        <script src='<?php echo Yii::app()->theme->baseUrl; ?>/js/bootstrap.js'></script> 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     </head>
     <style type="text/css">

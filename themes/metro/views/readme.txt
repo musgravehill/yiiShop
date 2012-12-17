@@ -1,0 +1,1 @@
+all views for controller placed in protected/view. Theming is applied to layouts only!

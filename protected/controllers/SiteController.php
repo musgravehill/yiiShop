@@ -24,7 +24,7 @@ class SiteController extends Controller {
         );
     }
 
-    public function actionIndex() {
+    public function actionIndex() {         
         $this->render('index');
     }
 
@@ -233,6 +233,19 @@ class SiteController extends Controller {
             }
         }
         $this->render('register', array('model' => $model, 'regReady' => $regReady));
+    }
+    
+    public function actionSetLanguage() {
+        $currentLang = Yii::app()->language;
+        $languages = array_keys(Yii::app()->params->languages);        
+        if ( (isset($_POST['language'])) && (in_array($_POST['language'], $languages)) ) {
+            Yii::app()->language = $_POST['language'];
+            Yii::app()->user->setState('language', $_POST['language']);
+            $cookie = new CHttpCookie('language', $_POST['language']);
+            $cookie->expire = time() + (60 * 60 * 24 * 365); // (1 year)
+            Yii::app()->request->cookies['language'] = $cookie;
+        }
+        $this->render('setlanguage', array('currentLang'=>$currentLang,'languages'=>Yii::app()->params->languages));
     }
 
 }

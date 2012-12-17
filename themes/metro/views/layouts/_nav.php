@@ -15,19 +15,19 @@
                     </ul>  
                     <ul class="nav nav-pills">   
                         <?php if (Yii::app()->user->isGuest) {
-                            echo '<li><a href="/site/login">'.Yii::t("navMenu","Login").'</a></li>';
-                            echo '<li><a href="/site/register">'.Yii::t("navMenu","Register").'</a></li>';
+                            echo '<li><a href="/site/login">Login</a></li>';
+                            echo '<li><a href="/site/register">Регистрация</a></li>';
                         } ?>		
                     </ul>  
                     
                     <ul class="nav nav-pills">   
                         <?php if (Yii::app()) {
-                            echo '<li><a href="/productmanager/admin">'.Yii::t("navMenu","Goods manager").'</a></li>';
+                            echo '<li><a href="/productmanager/admin">Управление товарами</a></li>';
                         } ?>		
                     </ul>  
                     <ul class="nav nav-pills">   
                         <?php if (Yii::app()) {
-                            echo '<li><a href="/catalog">'.Yii::t("navMenu","Catalog").'</a></li>';
+                            echo '<li><a href="/catalog">Каталог</a></li>';
                         } ?>		
                     </ul>  
                     
@@ -68,7 +68,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="/user/ff">ffff</a></li>                          
                         <li class="divider"></li>
-                        <li><a href="/site/logout">'.Yii::t("navMenu","Logout").'</a></li>          
+                        <li><a href="/site/logout">Выход</a></li>          
                     </ul>
                 </div>      
                         ';
@@ -78,10 +78,12 @@
                     <ul class="nav nav-pills pull-right">  
                         <li>
                         <a class="" href="/shop/mycart" >                        
-                               <i class="icon-white icon-shopping-cart"></i><?php echo Yii::t("navMenu","MyCart"); ?> 
+                               <i class="icon-white icon-shopping-cart"></i>Корзина 
                         </a> 
                        </li>
                     </ul>
+
+
                 </div>
             </div>
         </div>

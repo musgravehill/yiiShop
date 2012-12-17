@@ -6,6 +6,15 @@
  */
 class Controller extends CController {
 
+    public function __construct($id, $module = null) {
+        parent::__construct($id, $module);        
+        // Set the application language if provided by GET, session or cookie
+        if (Yii::app()->user->hasState('language'))
+            Yii::app()->language = Yii::app()->user->getState('language');
+        else if (isset(Yii::app()->request->cookies['language']))
+            Yii::app()->language = Yii::app()->request->cookies['language']->value;
+    }
+
     /**
      * @var string the default layout for the controller view. Defaults to '//layouts/column1',
      * meaning using a single column layout. See 'protected/views/layouts/column1.php'.
@@ -23,14 +32,14 @@ class Controller extends CController {
      */
     public $breadcrumbs = array();
 
-    protected function beforeAction($action) {           
+    protected function beforeAction($action) {
         /*
-        if (Yii::app()->user->checkAccess($this->getId() . ucfirst($this->getAction()->getId()))) {
-            return true;
-        } else { //403 forbidden
-            echo '<span style="color:red;">'. $this->getId() . ucfirst($this->getAction()->getId()).'</span>';
-            //Yii::app()->request->redirect(Yii::app()->user->loginUrl);
-        }*/
+          if (Yii::app()->user->checkAccess($this->getId() . ucfirst($this->getAction()->getId()))) {
+          return true;
+          } else { //403 forbidden
+          echo '<span style="color:red;">'. $this->getId() . ucfirst($this->getAction()->getId()).'</span>';
+          //Yii::app()->request->redirect(Yii::app()->user->loginUrl);
+          } */
         //Yii::app()->request->redirect(Yii::app()->user->returnUrl); - url before loginPage
 
         return true;
