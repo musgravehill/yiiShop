@@ -5,23 +5,23 @@
         'htmlOptions' => array('class'=>'form-horizontal span8 well',),
 )); ?>
        
-		<?php echo $form->labelEx($model,'username',array('class'=>'span1')); ?>
+		<?php echo $form->labelEx($model,Yii::t('user','username'),array('class'=>'span1')); ?>
 		<?php echo $form->textField($model,'username',array('class'=>'span2')); ?>
 		<?php echo $form->error($model,'username',array('class'=>'pull-right label label-important')); ?>
 	        <br>
-		<?php echo $form->labelEx($model,'password',array('class'=>'span1')); ?>
+		<?php echo $form->labelEx($model,Yii::t('user','password'),array('class'=>'span1')); ?>
 		<?php echo $form->passwordField($model,'password',array('class'=>'span2')); ?>
 		<?php echo $form->error($model,'password',array('class'=>'pull-right label label-important')); ?>
 	<br>
-		<?php echo $form->labelEx($model,'email',array('class'=>'span1')); ?>
+		<?php echo $form->labelEx($model,Yii::t('user','email'),array('class'=>'span1')); ?>
 		<?php echo $form->textField($model,'email',array('class'=>'span2')); ?>
 		<?php echo $form->error($model,'email',array('class'=>'pull-right label label-important')); ?>
         <br>
         
         <?php if(CCaptcha::checkRequirements()): ?>	
-		<?php echo $form->labelEx($model,'Я не бобот',array('class'=>'span1')); ?>
+		<?php echo $form->labelEx($model,Yii::t('user','I`m not a bobot'),array('class'=>'span1')); ?>
 		<?php echo $form->textField($model,'verifyCode',array('class'=>'span2')); ?>
-		<?php $this->widget('CCaptcha', array('buttonLabel'=>'другая каптча','imageOptions'=>array('class'=>''),'buttonOptions'=>array('class'=>'muted'))); 
+		<?php $this->widget('CCaptcha', array('buttonLabel'=>Yii::t('user','another captcha'),'imageOptions'=>array('class'=>''),'buttonOptions'=>array('class'=>'muted'))); 
                 ?>
 		
 		<?php echo $form->error($model,'verifyCode',array('class'=>'pull-right label label-important')); 
@@ -29,7 +29,7 @@
 	
 	<?php endif; ?>
 	<br><br>
-		<?php echo CHtml::submitButton('зарегистрироваться',array('class'=>'btn btn-success')); ?>
+		<?php echo CHtml::submitButton(Yii::t('user','Register'),array('class'=>'btn btn-success')); ?>
 	
 
 <?php $this->endWidget(); ?>
@@ -37,7 +37,7 @@
 <?php if ($regReady) { 
     echo '<div class="alert alert-success span3">
             <button type="button" class="close" data-dismiss="alert">&times;</button> 
-            Регистрация успешно завершена!
+            '.Yii::t('user','Register successfull!').'
           </div>';
     
 } ?>

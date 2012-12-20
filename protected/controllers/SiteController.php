@@ -24,7 +24,10 @@ class SiteController extends Controller {
         );
     }
 
-    public function actionIndex() {         
+    public function actionIndex() {
+        
+        
+        
         $this->render('index');
     }
 
@@ -143,6 +146,9 @@ class SiteController extends Controller {
         $auth->createOperation('shopCatalog', 'shop Catalog');
         $auth->createOperation('shopProduct', 'shop Product');
         $auth->createOperation('myCart', 'my Cart');
+        
+        $auth->createOperation('addCommentProduct', 'add Comment to Product');
+        
 
         //product crud
         $auth->createOperation('productAdmin', 'product Admin');
@@ -165,6 +171,8 @@ class SiteController extends Controller {
         $admin->addChild('myCart');
 
         $admin->addChild('changeUserRole');
+        
+        $admin->addChild('addCommentProduct');
 
         $admin->addChild('siteIndex');
         $admin->addChild('siteLogin');
@@ -189,6 +197,8 @@ class SiteController extends Controller {
         $client->addChild('shopCatalog');
         $client->addChild('shopProduct');
         $client->addChild('myCart');
+        
+        $client->addChild('addCommentProduct');
 
         $client->addChild('siteIndex');
         $client->addChild('siteLogin');

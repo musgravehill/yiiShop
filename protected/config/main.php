@@ -10,6 +10,7 @@ return array(
     'theme' => 'twitt', //only layots there  //twitt or metro     
     'sourceLanguage' => 'en',
     'language' => 'en',
+    
     // preloading 'log' component
     'preload' => array('log'),
     // autoloading model and component classes
@@ -97,18 +98,18 @@ return array(
             // use 'site/error' action to display errors
             'errorAction' => '/site/error',
         ),
-        'log' => array(
-            'class' => 'CLogRouter',
+        'log' => array(            
+            'class' => 'CLogRouter', /*
             'routes' => array(
                 array(//sql                   
                     'class' => 'CProfileLogRoute',
                     'levels' => 'profile,',
                     'enabled' => true,
-                ), /*
+                ), 
               array(  //application stack
               'class' => 'CWebLogRoute',
-              ), */
-            ),
+              ), 
+            ), */
         ),        
         'messages' => array(
             'class' => 'CPhpMessageSource',

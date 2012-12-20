@@ -42,6 +42,13 @@ return array (
     'bizRule' => NULL,
     'data' => NULL,
   ),
+  'changeUserRole' => 
+  array (
+    'type' => 0,
+    'description' => 'change UserRole',
+    'bizRule' => NULL,
+    'data' => NULL,
+  ),
   'shopCatalog' => 
   array (
     'type' => 0,
@@ -60,6 +67,13 @@ return array (
   array (
     'type' => 0,
     'description' => 'my Cart',
+    'bizRule' => NULL,
+    'data' => NULL,
+  ),
+  'addCommentProduct' => 
+  array (
+    'type' => 0,
+    'description' => 'add Comment to Product',
     'bizRule' => NULL,
     'data' => NULL,
   ),
@@ -137,21 +151,23 @@ return array (
       0 => 'shopCatalog',
       1 => 'shopProduct',
       2 => 'myCart',
-      3 => 'siteIndex',
-      4 => 'siteLogin',
-      5 => 'siteLogout',
-      6 => 'siteContact',
-      7 => 'siteCreateRBAC',
-      8 => 'siteCaptcha',
-      9 => 'siteNorights',
-      10 => 'productAdmin',
-      11 => 'productCreate',
-      12 => 'productDelete',
-      13 => 'productIndex',
-      14 => 'productUpdate',
-      15 => 'productView',
-      16 => 'productPerformAjaxValidation',
-      17 => 'productLoadModel',
+      3 => 'changeUserRole',
+      4 => 'addCommentProduct',
+      5 => 'siteIndex',
+      6 => 'siteLogin',
+      7 => 'siteLogout',
+      8 => 'siteContact',
+      9 => 'siteCreateRBAC',
+      10 => 'siteCaptcha',
+      11 => 'siteNorights',
+      12 => 'productAdmin',
+      13 => 'productCreate',
+      14 => 'productDelete',
+      15 => 'productIndex',
+      16 => 'productUpdate',
+      17 => 'productView',
+      18 => 'productPerformAjaxValidation',
+      19 => 'productLoadModel',
     ),
     'assignments' => 
     array (
@@ -173,44 +189,12 @@ return array (
       0 => 'shopCatalog',
       1 => 'shopProduct',
       2 => 'myCart',
-      3 => 'siteIndex',
-      4 => 'siteLogin',
-      5 => 'siteLogout',
-      6 => 'siteCaptcha',
-      7 => 'siteNorights',
-    ),
-    'assignments' => 
-    array (
-      47 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      48 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      49 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      50 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      51 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      52 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
+      3 => 'addCommentProduct',
+      4 => 'siteIndex',
+      5 => 'siteLogin',
+      6 => 'siteLogout',
+      7 => 'siteCaptcha',
+      8 => 'siteNorights',
     ),
   ),
   'guest' => 
