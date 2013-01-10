@@ -75,7 +75,7 @@ foreach ($comments as $comment) {
                     $("#rating_'.$comm_num.'").raty({
                         readOnly : true,
                         half  : true,
-                        score    : ' . (int)$comment['ratingValue'] . '
+                        score    : ' . (float)$comment['ratingValue'] . '
                     });
                 });       
       </script>        

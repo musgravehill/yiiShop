@@ -14,7 +14,7 @@ class ProductController extends Controller {
                 "user_id" => (integer)Yii::app()->user->id, 
                 "product_id" => (integer)$_POST['addComment']['product_id'], 
                 "author" => Yii::app()->user->name,
-                "ratingValue" => (integer)$_POST['addComment']['ratingValue'], 
+                "ratingValue" => (float)$_POST['addComment']['ratingValue'], 
                 "title" => $_POST['addComment']['title'], 
                 "description" => $_POST['addComment']['description'],              
                 "datePublished"=>date('Y-m-d H:i:s') );
