@@ -2,7 +2,7 @@
 
 <p>Online store based on yii 1.1.12</p>
 
-<h2>Features:<h2>
+<h2>Features:</h2>
 <ul>
 <li>user-friendly URL</li>
 <li>comments in mongoDB</li>
