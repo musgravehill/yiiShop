@@ -45,6 +45,8 @@ class Comment {
     }
 
     public function getProductRating($product_id) {
+        $averageRating =0;
+        $countVote = 0;
         $cursor[] = array("user_id" => 0,
             "product_id" => 0,
             "author" => '',

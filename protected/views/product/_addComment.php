@@ -4,8 +4,7 @@ echo '
     <div id="add_rating"></div>
     <script type="text/javascript">
             $(function() {                    
-                    $("#add_rating").raty({                        
-                        half  : true,
+                    $("#add_rating").raty({                  
                         score: 5,
                         click: function(score, evt) {                            
                             $("#addComment_ratingValue").val(score);                            

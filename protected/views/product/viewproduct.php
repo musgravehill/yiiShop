@@ -2,6 +2,8 @@
 echo '<script src="'.Yii::app()->theme->baseUrl.'/js/jquery.raty.min.js"></script>
 <script type="text/javascript">
     $.fn.raty.defaults.path = "'.Yii::app()->theme->baseUrl.'/images/raty";  
+    $.fn.raty.defaults.space =  false;   
+   // $.fn.raty.defaults.hints  =  ["'.Yii::t('ratingStar','bad').'","'.Yii::t('ratingStar','poor').'","'.Yii::t('ratingStar','regular').'","'.Yii::t('ratingStar','good').'","'.Yii::t('ratingStar','gorgeous').'"];
 </script>
 ';
 
@@ -34,8 +36,7 @@ echo '<div itemscope itemtype="http://schema.org/Product">
                 <script type="text/javascript">
                     $(function() {                            
                             $("#averageRating").raty({
-                                readOnly : true,
-                                half  : true,
+                                readOnly : true,                                
                                 score    : '.$productRating['averageRating'].'
                             });
                         });       
@@ -69,8 +70,7 @@ foreach ($comments as $comment) {
        <script type="text/javascript">
             $(function() {                    
                     $("#rating_'.$comm_num.'").raty({
-                        readOnly : true,
-                        half  : true,
+                        readOnly : true,                        
                         score    : ' . (float)$comment['ratingValue'] . '
                     });
                 });       
