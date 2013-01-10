@@ -1,7 +1,8 @@
 <?php
 
-class Comment extends CActiveRecord {
+class Comment {
 
+    //extends CActiveRecord
     protected $_dbName = 'yiishop';
     protected $_collectionName = 'comment';
     protected $_db;
@@ -19,10 +20,13 @@ class Comment extends CActiveRecord {
         }
     }
 
-    public function addComment($document) {
-        //$document = array( "user_id" => (integer), "product_id" => (integer), "comment"=>"Лампа классика жанра!" );
-        if ((is_array($document)) && (isset($this->_collection)))
+    public function addComment($document) {        
+        if ((isset($document['title'][1])) && (is_array($document)) && (isset($this->_collection))) {
+            if (($document['ratingValue'] < 0.5) || ($document['ratingValue'] > 5)) {
+                $document['ratingValue'] = 5;
+            }
             $this->_collection->insert($document);
+        }
         return true;
     }
 
@@ -49,16 +53,20 @@ class Comment extends CActiveRecord {
             "description" => '',
             "datePublished" => date('Y-m-d H:i:s'));
         if (isset($this->_collection)) {
-            $cursors = $this->_collection->find(array('product_id'=>(int)$product_id),array('ratingValue'=>1));
+            $cursors = $this->_collection->find(array('product_id' => (int) $product_id), array('ratingValue' => 1));
             $averageRating = 0;
             $countVote = 0;
             foreach ($cursors as $cursor) {
-                $averageRating += (int)$cursor['ratingValue'];
+                $averageRating += (int) $cursor['ratingValue'];
                 $countVote++;
-            }            
-            if ($countVote>0) {$averageRating=round(($averageRating/$countVote),1);} else {$averageRating=0;}
+            }
+            if ($countVote > 0) {
+                $averageRating = round(($averageRating / $countVote), 1);
+            } else {
+                $averageRating = 0;
+            }
         }
-        return array('averageRating'=>$averageRating, 'countVote'=>$countVote);
+        return array('averageRating' => $averageRating, 'countVote' => $countVote);
     }
 
 }

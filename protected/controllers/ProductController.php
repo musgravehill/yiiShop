@@ -9,7 +9,7 @@ class ProductController extends Controller {
         }
         
         if ( (isset($_POST['addComment'])) && (Yii::app()->user->checkAccess('addCommentProduct')) ) { 
-            $Comment = new Comment();
+            $Comment = new Comment();            
             $document = array( 
                 "user_id" => (integer)Yii::app()->user->id, 
                 "product_id" => (integer)$_POST['addComment']['product_id'], 
