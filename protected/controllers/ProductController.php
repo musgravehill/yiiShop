@@ -10,9 +10,14 @@ class ProductController extends Controller {
         
         if ( (isset($_POST['addComment'])) && (Yii::app()->user->checkAccess('addCommentProduct')) ) { 
             $Comment = new Comment();
-            $document = array( "user_id" => (integer)Yii::app()->user->id, 
+            $document = array( 
+                "user_id" => (integer)Yii::app()->user->id, 
                 "product_id" => (integer)$_POST['addComment']['product_id'], 
-                "comment"=>(string)$_POST['addComment']['comment'] );
+                "author" => Yii::app()->user->name,
+                "ratingValue" => (integer)$_POST['addComment']['ratingValue'], 
+                "title" => $_POST['addComment']['title'], 
+                "description" => $_POST['addComment']['description'],              
+                "datePublished"=>date('Y-m-d H:i:s') );
             $Comment->addComment($document);             
         }  
         
