@@ -1,12 +1,22 @@
 <?php
 echo CHtml::beginForm('','POST',array('class' => 'form well span5',));
-echo CHtml::dropDownList('addComment[ratingValue]', '', 
-              array('5' => 'A++', 
-                  '4' => 'good enough',
-                  '3'=>'not good',
-                  '2'=>'bad',
-                  '1'=>'OMG! BAD!',
-                  ));
+
+
+echo '
+    <div id="add_rating"></div>
+    <script type="text/javascript">
+            $(function() {                    
+                    $("#add_rating").raty({                        
+                        half  : true,
+                        score: 5,
+                        click: function(score, evt) {                            
+                            $("#addComment_ratingValue").val(score);                            
+                        }
+                    });
+                });       
+      </script>';
+
+echo CHtml::hiddenField('addComment[ratingValue]', 5);
 echo CHtml::textarea('addComment[title]', '', array('placeholder' => 'title','class'=>'span4'));
 echo CHtml::textarea('addComment[description]', '', array('placeholder' => 'description','class'=>'span4'));
 echo CHtml::hiddenField('addComment[product_id]', $product_id);

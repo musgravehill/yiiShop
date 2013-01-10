@@ -55,10 +55,10 @@ class Comment extends CActiveRecord {
             foreach ($cursors as $cursor) {
                 $averageRating += (int)$cursor['ratingValue'];
                 $countVote++;
-            }
-            $countVote ? 0 : $countVote=1;
+            }            
+            if ($countVote>0) {$averageRating=round(($averageRating/$countVote),1);} else {$averageRating=0;}
         }
-        return array('averageRating'=>round(($averageRating/$countVote),1), 'countVote'=>$countVote-1);
+        return array('averageRating'=>$averageRating, 'countVote'=>$countVote);
     }
 
 }
