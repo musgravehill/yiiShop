@@ -196,6 +196,14 @@ return array (
       7 => 'siteCaptcha',
       8 => 'siteNorights',
     ),
+    'assignments' => 
+    array (
+      1 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+    ),
   ),
   'guest' => 
   array (

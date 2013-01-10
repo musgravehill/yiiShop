@@ -18,7 +18,7 @@ echo '<div itemscope itemtype="http://schema.org/Product">
                     <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
                         <span itemprop="ratingValue" style="display:none;">'.$productRating['averageRating'].'</span> 
                         <div id="averageRating"></div>
-                        <span itemprop="reviewCount">'.$productRating['countVote'].'</span> голосов
+                        <span itemprop="reviewCount">'.$productRating['countVote'].'</span> '.Yii::t('product','votes').'
                     </div>
 
                     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
@@ -45,12 +45,8 @@ echo '<div itemscope itemtype="http://schema.org/Product">
 $this->renderPartial('//product/_addToCart', array('product_id' => $product->id));
 echo '     </div>';
 
-if (Yii::app()->user->checkAccess('addCommentProduct')) {
-    echo '<div class="row"> <h2>t::comments</h2>';
-    $this->renderPartial('//product/_addComment', array('product_id' => $product->id));
-    echo '</div>';
-}
 
+echo '<div class="row"> <h2 class="span12">'.Yii::t('product','comments').'</h2></div>';
 
 $criteria = array('product_id' => (integer) $product->id);
 $comments = $Comment->getComments($criteria);
@@ -83,6 +79,12 @@ foreach ($comments as $comment) {
     $comm_num++;
   }
   echo '</div> <!--end Product-->';
+  
+  if (Yii::app()->user->checkAccess('addCommentProduct')) {
+    echo '<div class="row">';
+    $this->renderPartial('//product/_addComment', array('product_id' => $product->id));
+    echo '</div>';
+}
   
 
 if (Yii::app()->user->hasFlash('successAddToCart')) {
