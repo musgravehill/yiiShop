@@ -26,19 +26,19 @@
         .navbar .brand { width:250px;}
     </style>
 
-    <body>        
+    <body itemscope itemtype="http://schema.org/WebPage">        
         <?php $this->renderPartial('//layouts/_nav', array()); ?>
 
         <div class="container"> 
-            <div class="row">
+            <div itemprop="breadcrumb" class="row">
                 <?php if (isset($this->breadcrumbs)): ?>
                     <?php
                     $this->widget('zii.widgets.CBreadcrumbs', array(
-                        'homeLink' => CHtml::link('Главная', '/'),
+                        'homeLink' => '<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="/"><span itemprop="title">Главная</span></a></li>',   //CHtml::link('Главная', '/'),
                         'separator' => ' &rarr; ',
                         'links' => $this->breadcrumbs,
                         'tagName' => 'ul',
-                        'activeLinkTemplate'=>'<li><a href="{url}">{label}</a></li>',
+                        'activeLinkTemplate'=>'<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="{url}"><span itemprop="title">{label}</span></a></li>',
                         'inactiveLinkTemplate'=>'<li>{label}</li>',
                         'htmlOptions' => array(
                             'class' => 'breadcrumb',
