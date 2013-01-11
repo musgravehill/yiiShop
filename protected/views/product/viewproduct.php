@@ -3,7 +3,7 @@ echo '<script src="'.Yii::app()->theme->baseUrl.'/js/jquery.raty.min.js"></scrip
 <script type="text/javascript">
     $.fn.raty.defaults.path = "'.Yii::app()->theme->baseUrl.'/images/raty";  
     $.fn.raty.defaults.space =  false;   
-   // $.fn.raty.defaults.hints  =  ["'.Yii::t('ratingStar','bad').'","'.Yii::t('ratingStar','poor').'","'.Yii::t('ratingStar','regular').'","'.Yii::t('ratingStar','good').'","'.Yii::t('ratingStar','gorgeous').'"];
+    $.fn.raty.defaults.hints  =  ["'.Yii::t('ratingStar','bad').'","'.Yii::t('ratingStar','poor').'","'.Yii::t('ratingStar','regular').'","'.Yii::t('ratingStar','good').'","'.Yii::t('ratingStar','gorgeous').'"];
 </script>
 ';
 

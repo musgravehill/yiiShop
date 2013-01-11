@@ -1,14 +1,12 @@
 <?php
 
-class Comment {
-
-    //extends CActiveRecord
+class Comment {    
     protected $_dbName = 'yiishop';
     protected $_collectionName = 'comment';
     protected $_db;
-    protected $_collection;
+    protected $_collection;    
 
-    public function __construct() {
+    public function __construct() {        
         try {
             $m = new MongoClient();
             $dbName = $this->_dbName;
@@ -21,23 +19,21 @@ class Comment {
     }
 
     public function addComment($document) {        
-        if ((isset($document['title'][1])) && (is_array($document)) && (isset($this->_collection))) {
-            if (($document['ratingValue'] < 0.5) || ($document['ratingValue'] > 5)) {
-                $document['ratingValue'] = 5;
-            }
+        if (  (CommentValidator::validate($document)) && (isset($this->_collection))) {            
             $this->_collection->insert($document);
         }
         return true;
     }
 
-    public function getComments($criteria) {
+    public function getComments($criteria) {        
         $cursor[] = array("user_id" => 0,
             "product_id" => 0,
             "author" => '',
             "ratingValue" => 0,
             "title" => 'cant load mongo',
             "description" => '',
-            "datePublished" => date('Y-m-d H:i:s'));
+            "datePublished" => date('Y-m-d H:i:s'));        
+        
         if ((is_array($criteria)) && (isset($this->_collection))) {
             $cursor = $this->_collection->find($criteria);
         }
