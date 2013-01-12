@@ -1,16 +1,20 @@
 <?php
 
 class Comment {    
-    protected $_dbName = 'yiishop';
-    protected $_collectionName = 'comment';
+    protected static $_dbName = 'yiishop';
+    protected static $_collectionName = 'comment';
+    protected static $_username = 'yiishop';
+    protected static $_password = 'yiishop';
+    protected static $_host = '127.0.0.1';
+    protected static $_port = 27017;
     protected $_db;
     protected $_collection;    
 
     public function __construct() {        
         try {
-            $m = new MongoClient();
-            $dbName = $this->_dbName;
-            $collectionName = $this->_collectionName;
+            $m = new MongoClient("mongodb://".self::$_username.":".self::$_password."@".self::$_host.":".self::$_port."/".  self::$_dbName);            
+            $dbName = self::$_dbName;
+            $collectionName = self::$_collectionName;
             $this->_db = $m->$dbName;
             $this->_collection = $this->_db->$collectionName;
         } catch (Exception $e) {
