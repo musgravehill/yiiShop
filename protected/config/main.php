@@ -9,8 +9,7 @@ return array(
     'name' => 'yiiShop',
     'theme' => 'twitt', //only layots there  //twitt or metro     
     'sourceLanguage' => 'en',
-    'language' => 'en',
-    
+    'language' => 'en',   
     // preloading 'log' component
     'preload' => array('log'),
     // autoloading model and component classes
@@ -89,7 +88,7 @@ return array(
             'schemaCachingDuration' => 60,
             'enableProfiling' => true,
             'enableParamLogging' => true,
-        ),
+        ),        
         'authManager' => array(
             'class' => 'CPhpAuthManager',
             'defaultRoles' => array('guest'),
@@ -123,6 +122,7 @@ return array(
         // this is used in contact page
         'adminEmail' => 'mdeed@mail.ru',
         'languages'=>array('en'=>'English', 'ru'=>'Русский'),
+        
     ),
 );
 

@@ -7,10 +7,9 @@ echo '<script src="'.Yii::app()->theme->baseUrl.'/js/jquery.raty.min.js"></scrip
 </script>
 ';
 
-$Comment = new Comment();
 $this->pageTitle = $product->name;
 $this->breadcrumbs = array('Каталог' => array('/catalog'), $product->name);
-$productRating = $Comment->getProductRating($product->id);
+$productRating = Comment::model()->getProductRating($product->id);
 
 echo '<div itemscope itemtype="http://schema.org/Product">
             <div class="row">
@@ -50,7 +49,7 @@ echo '     </div>';
 echo '<div class="row"> <h2 class="span12">'.Yii::t('product','comments').'</h2></div>';
 
 $criteria = array('product_id' => (integer) $product->id);
-$comments = $Comment->getComments($criteria);
+$comments = Comment::model()->getComments($criteria);
 $comm_num = 1;
 foreach ($comments as $comment) {
     echo '<div class="row" itemprop="review" itemscope itemtype="http://schema.org/Review">';
