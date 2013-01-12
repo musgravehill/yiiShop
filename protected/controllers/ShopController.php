@@ -25,19 +25,20 @@ class ShopController extends Controller {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
 
-        if ((isset($_POST['clearCart'])) && (!Yii::app()->user->isGuest)) {
-            Cart::model()->clearCart(Yii::app()->user->id);
+        if (isset($_POST['clearCart'])) {
+           Yii::app()->user->isGuest ? 
+                Cart::model()->clearCart(-1,session_id()) 
+                : Cart::model()->clearCart(Yii::app()->user->id,session_id());
         }
 
-        if ((isset($_POST['deleteFromCart'])) && (!Yii::app()->user->isGuest)) {
-            Cart::model()->deleteByPk((integer) $_POST['deleteFromCart']['cart_id'], "user_id = ?", array(Yii::app()->user->id));
+        if (isset($_POST['deleteFromCart']))  {
+            Yii::app()->user->isGuest ? 
+                Cart::model()->deleteByPk((int) $_POST['deleteFromCart']['cart_id'], "session_id = ?", array(session_id()))  
+               :  Cart::model()->deleteByPk((int) $_POST['deleteFromCart']['cart_id'], "user_id = ?", array(Yii::app()->user->id));            
         }
-
-        if (Yii::app()->user->isGuest) {
-            $myCart = Cart::model()->viewMyCart(0, session_id());
-        } else {
-            $myCart = Cart::model()->viewMyCart(Yii::app()->user->id, 0);
-        }
+        //show cart
+        Yii::app()->user->isGuest ? $myCart = Cart::model()->viewMyCart(-1, session_id()) : $myCart = Cart::model()->viewMyCart(Yii::app()->user->id, -1);
+        
 
         $this->render('mycart', array("myCart" => $myCart));
     }

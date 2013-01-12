@@ -137,9 +137,9 @@ class Cart extends CActiveRecord {
 
         $sql = "SELECT *, {$cart_table}.id as cart_id FROM {$cart_table},{$product_table} WHERE
             {$cart_table}.product_id = {$product_table}.id     AND      
-            (      ( {$cart_table}.user_id =:user_id AND user_id > 0) 
+            (       {$cart_table}.user_id =:user_id 
                 OR 
-                    ( {$cart_table}.session_id =:session_id )
+                     {$cart_table}.session_id =:session_id 
             )            
             LIMIT 1000";
         $command = $db->createCommand($sql);
@@ -173,8 +173,18 @@ class Cart extends CActiveRecord {
         return true;
     }
     
-    public function clearCart($user_id) {
-        Cart::model()->deleteAll('user_id = ? ', array((integer) $user_id));
+    public function clearCart($user_id,$session_id) {
+        $db = Yii::app()->db;
+        $cart_table = Cart::tableName();        
+        $sql = "DELETE FROM {$cart_table} WHERE            
+            (       {$cart_table}.user_id =:user_id 
+                OR 
+                     {$cart_table}.session_id =:session_id 
+            )  ";
+        $command = $db->createCommand($sql);
+        $command->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+        $command->bindParam(":session_id", $session_id, PDO::PARAM_STR);
+        $command->query();
     }
 
 }
