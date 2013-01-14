@@ -5,6 +5,7 @@
 <h2>Features:</h2>
 <ul>
 <li>user-friendly URL</li>
+<li>main RDBMS is MySQL</li>
 <li>comments in mongoDB</li>
 <li>caching</li>
 <li>rating stars for goods</li>
