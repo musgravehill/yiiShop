@@ -98,7 +98,7 @@ return array(
             'errorAction' => '/site/error',
         ),
         'log' => array(            
-            'class' => 'CLogRouter', 
+            'class' => 'CLogRouter', /*
             'routes' => array(
                 array(//sql                   
                     'class' => 'CProfileLogRoute',
@@ -108,7 +108,7 @@ return array(
               array(  //application stack
               'class' => 'CWebLogRoute',
               ), 
-            ), 
+            ), */
         ),        
         'messages' => array(   //t::lang
             'class' => 'CPhpMessageSource',

@@ -74,7 +74,7 @@ class ProductManagerController extends Controller {
         if (!Yii::app()->user->checkAccess('productDelete')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }        
-        $model = $this->loadModel($id);        
+        $model = $this->loadModel($id);         
         $model->delete();        
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
