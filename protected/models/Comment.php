@@ -1,18 +1,21 @@
 <?php
 
 class Comment extends dbMongo {
+
     private static $_collectionName = 'comment';
     protected $_db;
-    protected $_collection; 
-    
+    protected $_collection;
+
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
 
     public function __construct() {
-        parent::__construct(); 
+        parent::__construct();
         $collectionName = self::$_collectionName;
-        $this->_collection = $this->_db->$collectionName;
+        if ($this->_db instanceof MongoDB) {
+            $this->_collection = $this->_db->$collectionName;
+        }
     }
 
     public function addComment($document) {

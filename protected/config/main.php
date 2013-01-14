@@ -110,7 +110,7 @@ return array(
               ), 
             ), */
         ),        
-        'messages' => array(
+        'messages' => array(   //t::lang
             'class' => 'CPhpMessageSource',
             //'basePath'=> null, //'basePath' => realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'messages/ru'),
             //'cachingDuration' => 100,

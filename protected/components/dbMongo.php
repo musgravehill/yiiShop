@@ -8,7 +8,7 @@ class dbMongo {
     private static $_connectionString = "mongodb://yiishop:yiishop@127.0.0.1:27017/yiishop";
     private static $_dbName = 'yiishop';
     
-    public function __construct() {
+    public function __construct() {        
         try {
             $m = new MongoClient(self::$_connectionString);
             $dbName = self::$_dbName;
