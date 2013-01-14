@@ -6,6 +6,7 @@
 <ul>
 <li>user-friendly URL</li>
 <li>comments in mongoDB</li>
+<li>caching</li>
 <li>rating stars for goods</li>
 <li>myCart in sessions/DB</li>
 <li>schema.org: structured goods, comments, rating data for Google</li>
