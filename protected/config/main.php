@@ -31,7 +31,7 @@ return array(
     'components' => array(
         'request' => array(
             'enableCsrfValidation' => true,
-            'enableCookieValidation' => true,
+            'enableCookieValidation' => true, //не напрямую через $_COOKIES!!  A $cookie=new CHttpCookie($name,$value); Yii::app()->request->cookies[$name] =$cookie;
             'csrfCookie' => array(
                 'httpOnly' => true,
             ),
