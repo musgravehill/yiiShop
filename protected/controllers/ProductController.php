@@ -1,18 +1,29 @@
 <?php
 
-class ProductController extends Controller {   
-    public function filters() {
+class ProductController extends Controller {
+
+    public function filters() {      
         return array(
             array(
-                'productURLandLangOutputCache +ViewProduct',
-                'duration' => 1,     //3600*24*365           
+                'COutputCache +ViewProduct',
+                'duration' => 3600 * 24 * 365,
+                'varyByExpression'=> "(string)Yii::app()->user->isGuest.Yii::app()->language.Yii::app()->controller->actionParams['productURL']",                
+                'requestTypes' => array('GET'),
+                'dependency' => array(
+                    'class' => 'system.caching.dependencies.CDbCacheDependency',
+                    'sql' => "SELECT lastModified FROM {{product}} WHERE url = '".Yii::app()->controller->actionParams['productURL']."' ")
             ),
         );
-    } 
+    }
 
     public function actionViewProduct($productURL) {
         if (!Yii::app()->user->checkAccess('shopProduct')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
+        }
+        
+        $productURL = addslashes($productURL);
+        if (!($product = Product::model()->find(array("condition" => " url = '$productURL' ",)))) {
+            throw new CHttpException(404, 'Товар не найден');
         }
 
         if ((isset($_POST['addComment'])) && (Yii::app()->user->checkAccess('addCommentProduct'))) {
@@ -26,7 +37,8 @@ class ProductController extends Controller {
                 "description" => $_POST['addComment']['description'],
                 "datePublished" => date('Y-m-d H:i:s'));
             Comment::model()->addComment($document);
-            CachePageClear::clearPageCacheBYproductURL($productURL);
+            //PRODUCT ->lastModified = now()  TODO
+            $product->save();
         }
 
         if (isset($_POST['addToCart'])) {
@@ -35,14 +47,12 @@ class ProductController extends Controller {
                 Yii::app()->user->setFlash('successAddToCart', 'Товар добавлен в корзину');
             } else {
                 Yii::app()->user->setFlash('errorAddToCart', 'Товар не добавлен в корзину');
-            }       
-            CachePageClear::clearPageCacheBYproductURL($productURL);
+            }   
+            //PRODUCT ->lastModified = now()  TODO
+            $product->save();
         }
 
-        $productURL = addslashes($productURL);
-        if (!($product = Product::model()->find(array("condition" => " url = '$productURL' ",)))) {
-            throw new CHttpException(404, 'Товар не найден');
-        }
+        
 
         $this->render('viewproduct', array("product" => $product));
     }

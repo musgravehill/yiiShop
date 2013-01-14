@@ -56,8 +56,7 @@ class ProductManagerController extends Controller {
         // $this->performAjaxValidation($model);
 
         if (isset($_POST['Product'])) {
-            $model->attributes = $_POST['Product'];
-            CachePageClear::clearPageCacheBYproductURL($_POST['Product']['url']);
+            $model->attributes = $_POST['Product'];            
             if ($model->save()) $this->redirect(array('view', 'id' => $model->id));            
         }    
         
@@ -74,8 +73,9 @@ class ProductManagerController extends Controller {
     public function actionDelete($id) {
         if (!Yii::app()->user->checkAccess('productDelete')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
-        }
-        $this->loadModel($id)->delete();
+        }        
+        $model = $this->loadModel($id);        
+        $model->delete();        
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))

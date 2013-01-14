@@ -1,5 +1,5 @@
 <?php
-date_default_timezone_set('Etc/GMT-3');
+date_default_timezone_set('Etc/GMT-4');
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/yiiROOT/framework/yii.php';
 $config=dirname(__FILE__).'/protected/config/main.php';

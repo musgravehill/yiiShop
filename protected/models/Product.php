@@ -72,7 +72,7 @@ class Product extends CActiveRecord {
             'description' => 'Description',
             'price' => 'Price',
             'stock' => 'Stock',
-            'url' => 'Url',
+            'url' => 'Url',            
         );
     }
 
@@ -91,7 +91,8 @@ class Product extends CActiveRecord {
         $criteria->compare('description', $this->description, true);
         $criteria->compare('price', $this->price, true);
         $criteria->compare('stock', $this->stock);
-        $criteria->compare('url', $this->url, true);
+        $criteria->compare('url', $this->url, true);        
+        
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
@@ -100,7 +101,8 @@ class Product extends CActiveRecord {
     
     public function beforeSave() {
         parent::beforeSave();        
-        $this->url = $this->_bobGenerateUrl($this->name).'.html';        
+        $this->url = $this->_bobGenerateUrl($this->name).'.html';  
+        $this->lastModified = date('Y-m-d H:i:s');
         return true;
     }
 
