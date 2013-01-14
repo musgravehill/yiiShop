@@ -57,10 +57,10 @@ class ProductManagerController extends Controller {
 
         if (isset($_POST['Product'])) {
             $model->attributes = $_POST['Product'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+            CachePageClear::clearPageCacheBYproductURL($_POST['Product']['url']);
+            if ($model->save()) $this->redirect(array('view', 'id' => $model->id));            
         }    
-
+        
         $this->render('update', array(
             'model' => $model,
         ));

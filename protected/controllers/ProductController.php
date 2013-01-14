@@ -26,7 +26,7 @@ class ProductController extends Controller {
                 "description" => $_POST['addComment']['description'],
                 "datePublished" => date('Y-m-d H:i:s'));
             Comment::model()->addComment($document);
-            
+            CachePageClear::clearPageCacheBYproductURL($productURL);
         }
 
         if (isset($_POST['addToCart'])) {
@@ -35,7 +35,8 @@ class ProductController extends Controller {
                 Yii::app()->user->setFlash('successAddToCart', 'Товар добавлен в корзину');
             } else {
                 Yii::app()->user->setFlash('errorAddToCart', 'Товар не добавлен в корзину');
-            }            
+            }       
+            CachePageClear::clearPageCacheBYproductURL($productURL);
         }
 
         $productURL = addslashes($productURL);
