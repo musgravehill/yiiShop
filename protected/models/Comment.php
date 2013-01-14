@@ -15,7 +15,7 @@ class Comment extends dbMongo {
         $collectionName = self::$_collectionName;
         if ($this->_db instanceof MongoDB) {
             $this->_collection = $this->_db->$collectionName;
-        }
+        }        
     }
 
     public function addComment($document) {

@@ -13,7 +13,7 @@ class Controller extends CController {
             Yii::app()->language = Yii::app()->user->getState('language');
         else if (isset(Yii::app()->request->cookies['language']))
             Yii::app()->language = Yii::app()->request->cookies['language']->value;
-    }
+    }   
 
     /**
      * @var string the default layout for the controller view. Defaults to '//layouts/column1',
