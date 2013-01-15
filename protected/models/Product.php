@@ -117,5 +117,15 @@ class Product extends CActiveRecord {
         $url = preg_replace("/[^\w\d-]*/u", '', $url);        
         return $url;
     }
+    
+    public function getPriceMax(){
+        $db = Yii::app()->db;        
+        $product_table = Product::tableName();
+        $sql = "SELECT max(price) as maxPrice FROM {$product_table} ";
+        $command = $db->createCommand($sql);        
+        $dataReader = $command->query();
+        $row=$dataReader->read();         
+        return $row['maxPrice'];
+    }
 
 }

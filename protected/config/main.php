@@ -65,15 +65,11 @@ return array(
                 'catalog/<productURL:.*>' => 'product/viewproduct',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
-        ),
-        /* 'db'=>array(
-          'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-          ), */
-        // uncomment the following to use a MySQL database
+        ),        
         'cache' => array(
             'class' => 'system.caching.CMemCache',  //CDummyCache //CMemCache
             'servers' => array(
-                array('host' => '127.0.0.1', 'port' => 11211, 'weight' => 60),
+                array('host' => '127.0.0.1', 'port' => 11211, 'weight' => 100),
                 //array('host'=>'server2', 'port'=>11211, 'weight'=>40),
             ),
         ),
