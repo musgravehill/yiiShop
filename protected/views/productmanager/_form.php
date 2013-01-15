@@ -6,7 +6,20 @@
 
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php
+Yii::import('ext.imperavi-redactor-widget.ImperaviRedactorWidget');
+$this->widget('ImperaviRedactorWidget', array(    
+    'selector' => '.redactor',
+    // some options, see http://imperavi.com/redactor/docs/
+    'options' => array(
+        'lang' => 'ru',        
+        'iframe' => false,
+        'autoresize'=> true,
+        //'css' => 'wym.css',
+    ),
+));
+
+$form=$this->beginWidget('CActiveForm', array(
 	'id'=>'product-form',
 	'enableAjaxValidation'=>false,
 )); ?>
@@ -17,13 +30,13 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255,'class'=>'input-xxlarge')); ?>
 		<?php echo $form->error($model,'name'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('size'=>60,'maxlength'=>2048)); ?>
+		<?php echo $form->textArea($model,'description',array('maxlength'=>4048,'class'=>'redactor')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 
@@ -34,8 +47,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'stock').'0/1'; ?>
-		<?php echo $form->textField($model,'stock'); ?>
+		<?php echo $form->labelEx($model,'stock'); ?>
+		<?php echo $form->textField($model,'stock',array('placeholder'=>'0=backorder 1..999=inStock')); ?>
 		<?php echo $form->error($model,'stock'); ?>
 	</div>
 
