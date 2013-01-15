@@ -23,7 +23,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textField($model,'description',array('size'=>60,'maxlength'=>2048)); ?>
+		<?php echo $form->textArea($model,'description',array('size'=>60,'maxlength'=>2048)); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 
@@ -34,7 +34,7 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'stock'); ?>
+		<?php echo $form->labelEx($model,'stock').'0/1'; ?>
 		<?php echo $form->textField($model,'stock'); ?>
 		<?php echo $form->error($model,'stock'); ?>
 	</div>

@@ -6,7 +6,7 @@ class ProductController extends Controller {
         return array(
             array(
                 'COutputCache +ViewProduct',
-                'duration' => 3600 * 24 * 365,
+                'duration' => 4, //3600 * 24 * 365
                 'varyByExpression' => "(string)Yii::app()->user->isGuest.Yii::app()->language.Yii::app()->controller->actionParams['productURL']",
                 'requestTypes' => array('GET'), //on get show cache, on POST run action
                 'dependency' => array(

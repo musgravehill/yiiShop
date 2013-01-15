@@ -1,52 +1,56 @@
 <?php
+$this->pageTitle = $product->name;
+$this->breadcrumbs = array(Yii::t('catalog','Catalog') => array('/catalog'), $product->name);
+$productRating = Comment::model()->getProductRating($product->id);
+
 echo '<script src="'.Yii::app()->theme->baseUrl.'/js/jquery.raty.min.js"></script>
 <script type="text/javascript">
     $.fn.raty.defaults.path = "'.Yii::app()->theme->baseUrl.'/images/raty";  
     $.fn.raty.defaults.space =  false;   
     $.fn.raty.defaults.hints  =  ["'.Yii::t('ratingStar','bad').'","'.Yii::t('ratingStar','poor').'","'.Yii::t('ratingStar','regular').'","'.Yii::t('ratingStar','good').'","'.Yii::t('ratingStar','gorgeous').'"];
-</script>
+
+    $(function() {                            
+                $("#averageRating").raty({
+                    readOnly : true,                                
+                    score    : '.$productRating['averageRating'].'
+                });
+            });       
+    </script>
+
+<div itemscope itemtype="http://schema.org/Product">   
+    <div class="row">
+        <h1 itemprop="name" class="span5">' . $product->name . '</h1>
+        <div class="span2" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+            <span itemprop="ratingValue" style="display:none;">'.$productRating['averageRating'].'</span> 
+            <span id="averageRating"></span>
+            <span class="muted" itemprop="reviewCount">'.$productRating['countVote'].'</span> <span class="muted">'.Yii::t('product','votes').'</span>
+        </div>
+        <span class="span1 muted" itemprop="sku">sku:'.$product->id.'</span>
+    </div>
+    <div class="row">
+        <div class="span5">
+            <img class="pull-left thumbnail" itemprop="image" src="'.Yii::app()->createAbsoluteUrl('/images/product/' . $product->id.'.jpg'). '" title="' . $product->name . '" alt="' . $product->name . '" />
+        </div>
+        <div class="span4 alert alert-success">
+            <div class="pull-left" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                <span style="display: none;" itemprop="priceCurrency">RUB</span>
+                <link itemprop="availability" href="http://schema.org/InStock" />
+                <legend><span itemprop="price">' . $product->price . '</span> рублей</legend>        
+            </div>'; 
+
+            $this->renderPartial('//product/_addToCart', array('product_id' => $product->id));
+
+echo  '   
+        
+        </div>
+    </div>
+    <div class="row">   
+        <div class="span12" itemprop="description">' . $product->description . '</div>
+    </div>
+   
 ';
 
-$this->pageTitle = $product->name;
-$this->breadcrumbs = array(Yii::t('catalog','Catalog') => array('/catalog'), $product->name);
-$productRating = Comment::model()->getProductRating($product->id);
-
-echo '<div itemscope itemtype="http://schema.org/Product">
-            <div class="row">
-                <div class="span5">
-                    <h1 itemprop="name">' . $product->name . '</a></h1>
-                        
-                    <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-                        <span itemprop="ratingValue" style="display:none;">'.$productRating['averageRating'].'</span> 
-                        <div id="averageRating"></div>
-                        <span itemprop="reviewCount">'.$productRating['countVote'].'</span> '.Yii::t('product','votes').'
-                    </div>
-
-                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                        <span style="display: none;" itemprop="priceCurrency">RUB</span>
-                        <link itemprop="availability" href="http://schema.org/InStock" />
-                        <h3><span itemprop="price">' . $product->price . '</span> рублей</h3>        
-                    </div>                            
-                    <img itemprop="image" src="'.Yii::app()->createAbsoluteUrl('/images/product/' . $product->id.'.jpg'). '" title="' . $product->name . '" alt="' . $product->name . '" />
-                    <p itemprop="description">' . $product->description . '</p> 
-                    <span itemprop="sku">sku:'.$product->id.'</span>    
-                </div>
-
-                <script type="text/javascript">
-                    $(function() {                            
-                            $("#averageRating").raty({
-                                readOnly : true,                                
-                                score    : '.$productRating['averageRating'].'
-                            });
-                        });       
-                </script>
-       ';
-
-$this->renderPartial('//product/_addToCart', array('product_id' => $product->id));
-echo '     </div>';
-
-
-echo '<div class="row"> <h2 class="span12">'.Yii::t('product','comments').'</h2></div>';
+echo '<h2 class="span12">'.Yii::t('product','comments').'</h2>';
 
 $criteria = array('product_id' => (integer) $product->id);
 $comments = Comment::model()->getComments($criteria);

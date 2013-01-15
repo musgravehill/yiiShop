@@ -101,8 +101,9 @@ class Product extends CActiveRecord {
     
     public function beforeSave() {
         parent::beforeSave();        
-        $this->url = $this->_bobGenerateUrl($this->name).'.html';  
-        $this->lastModified = date('Y-m-d H:i:s');
+        $this->url = $this->_bobGenerateUrl($this->name).'.html'; 
+        $this->description = str_replace(array('script','css'), '', $this->description);
+        $this->lastModified = date('Y-m-d H:i:s');  //in_update trigger in mysql doesnot work with AR
         return true;
     }
 
