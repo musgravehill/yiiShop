@@ -1,8 +1,10 @@
 <?php
-$this->pageTitle = 'Каталог ' . Yii::app()->name;
-$this->breadcrumbs = array('Каталог',);
+$this->pageTitle = Yii::t('catalog','Catalog') .' '. Yii::app()->name;
+$this->breadcrumbs = array(Yii::t('catalog','Catalog'),);
+
+echo '<h1>'.Yii::t('catalog','Catalog').'</h1>';
 ?>
-<h1>Каталог товаров</h1>
+
 
 <?php
 $this->renderPartial('//catalog/_sort', array('priceMax'=>$priceMax,'priceRangeMin'=>$priceRangeMin,'priceRangeMax'=>$priceRangeMax));

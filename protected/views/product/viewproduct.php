@@ -8,7 +8,7 @@ echo '<script src="'.Yii::app()->theme->baseUrl.'/js/jquery.raty.min.js"></scrip
 ';
 
 $this->pageTitle = $product->name;
-$this->breadcrumbs = array('Каталог' => array('/catalog'), $product->name);
+$this->breadcrumbs = array(Yii::t('catalog','Catalog') => array('/catalog'), $product->name);
 $productRating = Comment::model()->getProductRating($product->id);
 
 echo '<div itemscope itemtype="http://schema.org/Product">

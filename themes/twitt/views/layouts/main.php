@@ -34,7 +34,7 @@
                 <?php if (isset($this->breadcrumbs)): ?>
                     <?php
                     $this->widget('zii.widgets.CBreadcrumbs', array(
-                        'homeLink' => '<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="/"><span itemprop="title">Главная</span></a></li>',   //CHtml::link('Главная', '/'),
+                        'homeLink' => '<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="/"><span itemprop="title">'.Yii::t('breadcrumbs','Home').'</span></a></li>',   //CHtml::link('Главная', '/'),
                         'separator' => ' &rarr; ',
                         'links' => $this->breadcrumbs,
                         'tagName' => 'ul',
