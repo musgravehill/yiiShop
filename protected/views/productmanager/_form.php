@@ -9,13 +9,12 @@
 <?php
 Yii::import('ext.imperavi-redactor-widget.ImperaviRedactorWidget');
 $this->widget('ImperaviRedactorWidget', array(    
-    'selector' => '.redactor',
-    // some options, see http://imperavi.com/redactor/docs/
+    'selector' => '.redactor',    
     'options' => array(
         'lang' => 'ru',        
         'iframe' => false,
         'autoresize'=> true,
-        //'css' => 'wym.css',
+        'css' => 'wym.css',
     ),
 ));
 

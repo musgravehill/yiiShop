@@ -96,27 +96,35 @@ class Cart extends CActiveRecord {
     }
 
     public function addTocart($postData) {
-        $postData['user_id'] = (integer) Yii::app()->user->id;
-        $postData['session_id'] = session_id();
-        $itemInCart = Cart::model()->find(
-                array(
-                    "condition" => " 
-                            (product_id = " . (integer) $postData['product_id'] . ") 
+        $product = Product::model()->find(array("condition" => " stock >= " . (int) $postData['quantity'] . " AND id = " . (int) $postData['product_id'],));
+        if ($product) {
+            $product->stock -= (int) $postData['quantity'];
+            $product->save();
+            $postData['user_id'] = (int) Yii::app()->user->id;
+            $postData['session_id'] = session_id();
+            $itemInCart = Cart::model()->find(
+                    array(
+                        "condition" => " 
+                            (product_id = " . (int) $postData['product_id'] . ")                               
                         AND 
-                            (      ( user_id = " . (integer) $postData['user_id'] . " AND user_id > 0) 
+                            (      ( user_id = " . (int) $postData['user_id'] . " AND user_id > 0) 
                                 OR 
                                    ( session_id = '" . $postData['session_id'] . "' )
                             )   ",
-                    "limit" => 1,
-                )
-        );
-        if (isset($itemInCart)) {
-            $itemInCart->quantity += $postData['quantity'];
+                        "limit" => 1,
+                    )
+            );
+            if (isset($itemInCart)) {
+                $itemInCart->quantity += (int)$postData['quantity'];
+            } else {
+                $itemInCart = new Cart();
+                $itemInCart->attributes = $postData;
+            }
+            $itemInCart->save();
+            $result = true;
         } else {
-            $itemInCart = new Cart();
-            $itemInCart->attributes = $postData;
+            $result = false;
         }
-        $itemInCart->save() ? $result = true : $result = false;
         return $result;
     }
 
@@ -172,10 +180,10 @@ class Cart extends CActiveRecord {
         }
         return true;
     }
-    
-    public function clearCart($user_id,$session_id) {
+
+    public function clearCart($user_id, $session_id) {
         $db = Yii::app()->db;
-        $cart_table = Cart::tableName();        
+        $cart_table = Cart::tableName();
         $sql = "DELETE FROM {$cart_table} WHERE            
             (       {$cart_table}.user_id =:user_id 
                 OR 

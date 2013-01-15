@@ -19,7 +19,7 @@ class CatalogController extends Controller {
 
         $products = Product::model()->findAll(
                 array(
-                    "condition" => " stock = 1 AND price >= $priceRangeMin AND price <= $priceRangeMax ",
+                    "condition" => " stock > 0 AND price >= $priceRangeMin AND price <= $priceRangeMax ",
                     "order" => "price", //rand()
                     "limit" => 10,
                 )
