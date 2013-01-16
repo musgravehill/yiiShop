@@ -1,7 +1,13 @@
 {
-    "name":"musgravehill/yiishop",
-    "version":"1.0.0",
-    "require":{
+    "name": "musgravehill/yiishop"
+  , "description": "Online store based on yii 1.1.12"
+  , "keywords": ["php", "yii"]
+  , "homepage": "https://github.com/musgravehill/yiiShop"
+  , "author": "musgravehill"  
+  , "target-dir": "musgravehill/yiishop"
+  , "version" : "1.0.0"
+  ,  "require":{
         "php":">=5.3.0"
     }
+
 }
