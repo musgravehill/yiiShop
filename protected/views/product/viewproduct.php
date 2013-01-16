@@ -30,13 +30,13 @@ echo '<script src="' . Yii::app()->theme->baseUrl . '/js/jquery.raty.min.js"></s
     </div>
     <div class="row">
         <div class="span5">
-            <img class="pull-left thumbnail" itemprop="image" src="' . Yii::app()->createAbsoluteUrl('/images/product/' . $product->id . '.jpg') . '" title="' . $product->name . '" alt="' . $product->name . '" />
+            <img class="thumbnail" itemprop="image" src="' . Yii::app()->createAbsoluteUrl('/images/product/' . $product->id . '.jpg') . '" title="' . $product->name . '" alt="' . $product->name . '" />
         </div>
         <div class="span5 alert alert-success">
             <div class="pull-left" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                 <span style="display: none;" itemprop="priceCurrency">RUB</span>
                 <link itemprop="availability" href="http://schema.org/InStock" />
-                <legend class="pull-left"><span itemprop="price">' . $product->price . '</span> рублей</legend>                  
+                <span class="price"><span itemprop="price">' . $product->price . '</span> рублей</span>                  
             </div>             ';
             if ($product->stock > 0) {
                 $this->renderPartial('//product/_addToCart', array('product_id' => $product->id, 'product_stock' => $product->stock));
