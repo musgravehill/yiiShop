@@ -3,6 +3,7 @@
 $this->pageTitle = $product->name;
 $this->breadcrumbs = array(Yii::t('catalog', 'Catalog') => array('/catalog'), $product->name);
 $productRating = Comment::model()->getProductRating($product->id);
+$imageLink = Yii::app()->createAbsoluteUrl(Yii::app()->params['imagesProductRoot'].'/'.$product->image);
 
 echo '<script src="' . Yii::app()->theme->baseUrl . '/js/jquery.raty.min.js"></script>
 <script type="text/javascript">
@@ -30,7 +31,7 @@ echo '<script src="' . Yii::app()->theme->baseUrl . '/js/jquery.raty.min.js"></s
     </div>
     <div class="row">
         <div class="span5">
-            <img class="thumbnail" itemprop="image" src="' . Yii::app()->createAbsoluteUrl('/images/product/' . $product->id . '.jpg') . '" title="' . $product->name . '" alt="' . $product->name . '" />
+            <img class="thumbnail" itemprop="image" src="' . $imageLink . '" title="' . $product->name . '" alt="' . $product->name . '" />
         </div>
         <div class="span5 alert alert-success">
             <div class="pull-left" itemprop="offers" itemscope itemtype="http://schema.org/Offer">

@@ -21,9 +21,11 @@ $this->widget('ImperaviRedactorWidget', array(
 $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'product-form',
 	'enableAjaxValidation'=>false,
+        'htmlOptions'=>array('enctype'=>'multipart/form-data'),
+        
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -50,6 +52,16 @@ $form=$this->beginWidget('CActiveForm', array(
 		<?php echo $form->textField($model,'stock',array('placeholder'=>'0=backorder 1..999=inStock')); ?>
 		<?php echo $form->error($model,'stock'); ?>
 	</div>
+        
+        <div class="row">
+                <?php if($model->image) {
+                    $imageLink = Yii::app()->createAbsoluteUrl(Yii::app()->params['imagesProductRoot'].'/'.$model->image);
+                    echo '<img src="'.$imageLink.'" >';
+                } ?>
+		<?php echo $form->labelEx($model,'image'); ?>
+		<?php echo $form->fileField($model,'image',array('placeholder'=>'imgg')); ?>
+		<?php echo $form->error($model,'image'); ?>
+	</div>
 
 	<div class="row">
 		<?php //echo $form->labelEx($model,'url'); 
@@ -60,7 +72,7 @@ $form=$this->beginWidget('CActiveForm', array(
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save', array('class'=>'btn btn-primary')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
