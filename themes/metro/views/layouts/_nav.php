@@ -44,7 +44,7 @@
                                         array('label' => 'Home', 'url' => array('/site/index')),
                                         array('label' => 'About', 'url' => array('/site/page', 'view' => 'about')),
                                         array('label' => 'Contact', 'url' => array('/site/contact')),
-                                        array('label' => 'Каталог', 'url' => array('/shop/catalog')),
+                                        array('label' => 'Каталог', 'url' => array('/cart/catalog')),
                                         array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                                         array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
                                     ),
@@ -77,7 +77,7 @@
                     
                     <ul class="nav nav-pills pull-right">  
                         <li>
-                        <a class="" href="/shop/mycart" >                        
+                        <a class="" href="/cart/mycart" >                        
                                <i class="icon-white icon-shopping-cart"></i>Корзина 
                         </a> 
                        </li>

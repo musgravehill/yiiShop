@@ -49,17 +49,17 @@ return array (
     'bizRule' => NULL,
     'data' => NULL,
   ),
-  'shopCatalog' => 
+  'viewCatalog' => 
   array (
     'type' => 0,
-    'description' => 'shop Catalog',
+    'description' => 'view Catalog',
     'bizRule' => NULL,
     'data' => NULL,
   ),
-  'shopProduct' => 
+  'viewProduct' => 
   array (
     'type' => 0,
-    'description' => 'shop Product',
+    'description' => 'view Product',
     'bizRule' => NULL,
     'data' => NULL,
   ),
@@ -148,8 +148,8 @@ return array (
     'data' => NULL,
     'children' => 
     array (
-      0 => 'shopCatalog',
-      1 => 'shopProduct',
+      0 => 'viewCatalog',
+      1 => 'viewProduct',
       2 => 'myCart',
       3 => 'changeUserRole',
       4 => 'addCommentProduct',
@@ -176,11 +176,6 @@ return array (
         'bizRule' => NULL,
         'data' => NULL,
       ),
-      53 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
     ),
   ),
   'client' => 
@@ -191,8 +186,8 @@ return array (
     'data' => NULL,
     'children' => 
     array (
-      0 => 'shopCatalog',
-      1 => 'shopProduct',
+      0 => 'viewCatalog',
+      1 => 'viewProduct',
       2 => 'myCart',
       3 => 'addCommentProduct',
       4 => 'siteIndex',
@@ -200,19 +195,6 @@ return array (
       6 => 'siteLogout',
       7 => 'siteCaptcha',
       8 => 'siteNorights',
-    ),
-    'assignments' => 
-    array (
-      1 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      53 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
     ),
   ),
   'guest' => 
@@ -223,8 +205,8 @@ return array (
     'data' => NULL,
     'children' => 
     array (
-      0 => 'shopCatalog',
-      1 => 'shopProduct',
+      0 => 'viewCatalog',
+      1 => 'viewProduct',
       2 => 'myCart',
       3 => 'siteLogin',
       4 => 'siteLogout',

@@ -33,11 +33,11 @@
         <td></td>
         <td><strong>Итого:</strong></td>
         <td><?php echo '<strong>'.$summaryPrice.'</strong>'; ?></td>   
-        <td><?php $this->renderPartial('//shop/_placeOrder'); ?></td>
+        <td><?php $this->renderPartial('//cart/_placeOrder'); ?></td>
     </tr>
 </table>  
    
-   <?php $this->renderPartial('//shop/_clearCart'); ?>
+   <?php $this->renderPartial('//cart/_clearCart'); ?>
 </div>
 
 

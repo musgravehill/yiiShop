@@ -143,8 +143,8 @@ class SiteController extends Controller {
         $auth->createOperation('changeUserRole', 'change UserRole');
 
         //shop
-        $auth->createOperation('shopCatalog', 'shop Catalog');
-        $auth->createOperation('shopProduct', 'shop Product');
+        $auth->createOperation('viewCatalog', 'view Catalog');
+        $auth->createOperation('viewProduct', 'view Product');
         $auth->createOperation('myCart', 'my Cart');
         
         $auth->createOperation('addCommentProduct', 'add Comment to Product');
@@ -166,8 +166,8 @@ class SiteController extends Controller {
 
         //создаем роль для пользователя admin и указываем, какие операции он может выполнять
         $admin = $auth->createRole('admin');
-        $admin->addChild('shopCatalog');
-        $admin->addChild('shopProduct');
+        $admin->addChild('viewCatalog');
+        $admin->addChild('viewProduct');
         $admin->addChild('myCart');
 
         $admin->addChild('changeUserRole');
@@ -194,8 +194,8 @@ class SiteController extends Controller {
 
         //создаем роль user и добавляем операции для неё
         $client = $auth->createRole('client');
-        $client->addChild('shopCatalog');
-        $client->addChild('shopProduct');
+        $client->addChild('viewCatalog');
+        $client->addChild('viewProduct');
         $client->addChild('myCart');
         
         $client->addChild('addCommentProduct');
@@ -208,8 +208,8 @@ class SiteController extends Controller {
         //    
         //guest default role
         $guest = $auth->createRole('guest');
-        $guest->addChild('shopCatalog');
-        $guest->addChild('shopProduct');
+        $guest->addChild('viewCatalog');
+        $guest->addChild('viewProduct');
         $guest->addChild('myCart');
 
         $guest->addChild('siteLogin');

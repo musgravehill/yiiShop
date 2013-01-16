@@ -115,7 +115,7 @@ class Cart extends CActiveRecord {
                     )
             );
             if (isset($itemInCart)) {
-                $itemInCart->quantity += (int)$postData['quantity'];
+                $itemInCart->quantity += (int) $postData['quantity'];
             } else {
                 $itemInCart = new Cart();
                 $itemInCart->attributes = $postData;
@@ -182,17 +182,35 @@ class Cart extends CActiveRecord {
     }
 
     public function clearCart($user_id, $session_id) {
+        //return products to stock
+        $productsFromCart = cart::model()->findAll(" user_id = $user_id OR  session_id = '$session_id'  ");
+        foreach ($productsFromCart as $productFromCart) {
+            $product = Product::model()->findByPk($productFromCart->product_id);
+            $product->stock += $productFromCart->quantity;
+            $product->save();
+        }
+
         $db = Yii::app()->db;
         $cart_table = Cart::tableName();
-        $sql = "DELETE FROM {$cart_table} WHERE            
-            (       {$cart_table}.user_id =:user_id 
-                OR 
-                     {$cart_table}.session_id =:session_id 
-            )  ";
+
+        $sql = "DELETE FROM {$cart_table} WHERE
+          (       {$cart_table}.user_id =:user_id
+          OR
+          {$cart_table}.session_id =:session_id
+          )  ";
         $command = $db->createCommand($sql);
         $command->bindParam(":user_id", $user_id, PDO::PARAM_INT);
         $command->bindParam(":session_id", $session_id, PDO::PARAM_STR);
         $command->query();
+    }
+
+    public function deleteFromCart($cartItemIDforDelete, $user_id, $session_id) {        
+        if ($itemCart = cart::model()->find(" id = $cartItemIDforDelete AND ( user_id = $user_id OR session_id = '$session_id' ) ")) {
+            $product = Product::model()->findByPk($itemCart->product_id);
+            $product->stock += $itemCart->quantity; //return products to stock
+            $product->save();
+            $itemCart->delete(); //delete item cart
+        }
     }
 
 }

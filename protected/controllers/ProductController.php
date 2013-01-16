@@ -17,7 +17,7 @@ class ProductController extends Controller {
     }
 
     public function actionViewProduct($productURL) {
-        if (!Yii::app()->user->checkAccess('shopProduct')) {
+        if (!Yii::app()->user->checkAccess('viewProduct')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
 

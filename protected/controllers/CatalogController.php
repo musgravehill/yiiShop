@@ -3,7 +3,7 @@
 class CatalogController extends Controller {
 
     public function actionViewCatalog() {
-        if (!Yii::app()->user->checkAccess('shopCatalog')) {
+        if (!Yii::app()->user->checkAccess('viewCatalog')) {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }    
         $priceMax = (int)Product::model()->getPriceMax(); //max price in all catalog
