@@ -118,7 +118,7 @@ return array(
         // this is used in contact page
         'adminEmail' => 'mdeed@mail.ru',
         'languages'=>array('en'=>'English', 'ru'=>'Русский'),
-        'imagesProductRoot'=>'images/product', // site/images/product
+        'imagesProductRoot'=>'images/product', //     images/product
         
     ),
 );
