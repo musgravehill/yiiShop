@@ -31,7 +31,7 @@ echo '<script src="' . Yii::app()->theme->baseUrl . '/js/jquery.raty.min.js"></s
                 <img class="thumbnail" itemprop="image" src="' . $imageLink . '" title="' . $product->name . '" alt="' . $product->name . '" />
             </a>            
             
-            <div id="srcProductImageModal" class="modal hide fade" tabindex="-1" role="dialog" >
+            <div id="srcProductImageModal" class="modal hide fade" >
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <label>' . $product->name . '</label>                    
