@@ -142,7 +142,7 @@ class Product extends CActiveRecord {
     public function beforeDelete() {
         parent::beforeDelete();
         $ImageProcessor = new ImageProcessor();
-        $ImageProcessor->deleteProductImage($this->image);
+        $ImageProcessor->deleteProductImage($this->image); //unlink src & product images
         return true;
     }
 
