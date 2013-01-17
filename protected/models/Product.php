@@ -11,7 +11,7 @@
  * @property integer $stock
  * @property string $url
  */
-class Product extends CActiveRecord {    
+class Product extends CActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -41,12 +41,15 @@ class Product extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('name, description, price, url', 'required'),
+            array('name, description, price,stock', 'required'),
             array('stock', 'numerical', 'integerOnly' => true),
             array('name, url', 'length', 'max' => 255),
-            array('description', 'length', 'max' => 2048),
+            array('description', 'length', 'max' => 4048),
+            array('description', 'safe'),
             array('price', 'length', 'max' => 9),
-            array('image', 'file', 'types'=>'jpg','maxSize' => 1048576,'allowEmpty'=>true,'on'=>'insert,update'),
+            array('image', 'file', 'types' => 'jpg', 'maxSize' => 1048576, 'allowEmpty' => true, 'on' => 'insert,update'),
+            //array('url','unique'),  not possible cause Rules filter user-input, but not a generated data. 
+            //Url generated in beforeSave and can`t be filtered by Rules         
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, name, description, price, stock, url', 'safe', 'on' => 'search'),
@@ -73,7 +76,7 @@ class Product extends CActiveRecord {
             'description' => 'Description',
             'price' => 'Price',
             'stock' => 'Stock',
-            'url' => 'Url',            
+            'url' => 'Url',
         );
     }
 
@@ -92,48 +95,55 @@ class Product extends CActiveRecord {
         $criteria->compare('description', $this->description, true);
         $criteria->compare('price', $this->price, true);
         $criteria->compare('stock', $this->stock);
-        $criteria->compare('url', $this->url, true);        
-        
+        $criteria->compare('url', $this->url, true);
+
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
     }
-    
+
     public function beforeSave() {
-        parent::beforeSave();        
-        $this->url = $this->_bobGenerateUrl($this->name).'.html'; 
-        $this->description = str_replace(array('script','css'), '', $this->description);
+        parent::beforeSave();
+        $this->url = $this->_bobGenerateUrl($this->name) . '.html';
+        $this->description = str_replace(array('script', 'css'), '', $this->description);
         $this->lastModified = date('Y-m-d H:i:s');  //in_update trigger in mysql doesnot work with AR
-        if(($this->scenario=='insert' || $this->scenario=='update') && ($imageCUploadedFile=CUploadedFile::getInstance($this,'image'))){           
-            $imageName = str_replace('.html','.jpg',$this->url); //imageUrl like product name like url =)
+        if (($this->scenario == 'insert' || $this->scenario == 'update') && ($imageCUploadedFile = CUploadedFile::getInstance($this, 'image'))) {
+            $imageName = str_replace('.html', '.jpg', $this->url); //imageUrl like product name like url =)
             $this->image = $imageName;
             $ImageProcessor = new ImageProcessor();
-            $ImageProcessor->saveProductImage($imageCUploadedFile, $imageName);            
+            $ImageProcessor->saveProductImage($imageCUploadedFile, $imageName);
         }
         return true;
     }
 
     private function _bobGenerateUrl($productName) {
-        $cyr  = array('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у', 
-        'ф','х','ц','ч','ш','щ','ъ','ь', 'ы', 'ю','я','А','Б','В','Г','Д','Е','Ё','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У',
-        'Ф','Х','Ц','Ч','Ш','Щ','Ъ','Ь', 'Ы', 'Ю','Я', ' ' );
-        $lat = array( 'a','b','v','g','d','e','e','zh','z','i','j','k','l','m','n','o','p','r','s','t','u',
-        'f' ,'h' ,'ts' ,'ch','sh' ,'sht' ,'','' ,'y' ,'yu' ,'ya','a','b','v','g','d','e','e','zh','z','i','j','k','l','m','n','o','p','r','s','t','u',
-        'f' ,'h' ,'ts' ,'ch','sh' ,'sht' ,'','' ,'y' ,'yu' ,'ya', '-' );
+        $cyr = array('а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у',
+            'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ь', 'ы', 'ю', 'я', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У',
+            'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ь', 'Ы', 'Ю', 'Я', ' ');
+        $lat = array('a', 'b', 'v', 'g', 'd', 'e', 'e', 'zh', 'z', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u',
+            'f', 'h', 'ts', 'ch', 'sh', 'sht', '', '', 'y', 'yu', 'ya', 'a', 'b', 'v', 'g', 'd', 'e', 'e', 'zh', 'z', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u',
+            'f', 'h', 'ts', 'ch', 'sh', 'sht', '', '', 'y', 'yu', 'ya', '-');
         $url = str_replace($cyr, $lat, $productName);
-        $url = preg_replace("/[^\w\d-]*/Uu", '', $url);         
+        $url = preg_replace("/[^\w\d-]*/Uu", '', $url);
         return $url;
     }
-    
-    public function getPriceMax(){
-        $db = Yii::app()->db;        
+
+    public function getPriceMax() {
+        $db = Yii::app()->db;
         $product_table = Product::tableName();
         $sql = "SELECT max(price) as maxPrice FROM {$product_table} ";
-        $command = $db->createCommand($sql);        
+        $command = $db->createCommand($sql);
         $dataReader = $command->query();
-        $row=$dataReader->read();         
+        $row = $dataReader->read();
         return $row['maxPrice'];
+    }
+
+    public function beforeDelete() {
+        parent::beforeDelete();
+        $ImageProcessor = new ImageProcessor();
+        $ImageProcessor->deleteProductImage($this->image);
+        return true;
     }
 
 }

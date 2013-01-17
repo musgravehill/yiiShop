@@ -26,25 +26,15 @@ class ProductManagerController extends Controller {
             Yii::app()->user->loginRequired(); //благодаря этому Yii::app()->user->returnUrl знает предыдущую страницу
         }
         $model = new Product;
-
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
-
         if (isset($_POST['Product'])) {
-            $model->attributes = $_POST['Product'];
-            
-            $model->image=CUploadedFile::getInstance($model,'image');
-            if($model->save()){
-                $model->image->saveAs('C:/Users/Ikinet-M\Desktop\superhelloworld');
+            $model->attributes = $_POST['Product'];           
+            if($model->save()){                
                 $this->redirect(array('view', 'id' => $model->id));
-            }
-            
-            
+            }            
         }
-
-        $this->render('create', array(
-            'model' => $model,
-        ));
+        $this->render('create', array('model' => $model,));
     }
 
     /**
@@ -86,8 +76,7 @@ class ProductManagerController extends Controller {
         $model->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        if (!isset($_GET['ajax'])) $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
     /**

@@ -12,5 +12,12 @@ class ImageProcessor {
         $image->resizeToHeight(175);
         $image->save($imageLink);
     }
+    
+    public function deleteProductImage($imageName) {
+        $imageSrcLink =  Yii::getPathOfAlias('webroot.'.Yii::app()->params['imagesProductRoot']).'/src-'.$imageName;
+        $imageLink =  Yii::getPathOfAlias('webroot.'.Yii::app()->params['imagesProductRoot']).'/'.$imageName;
+        unlink($imageSrcLink);
+        unlink($imageLink);
+    }
 
 }

@@ -4,6 +4,7 @@ $this->pageTitle = $product->name;
 $this->breadcrumbs = array(Yii::t('catalog', 'Catalog') => array('/catalog'), $product->name);
 $productRating = Comment::model()->getProductRating($product->id);
 $imageLink = Yii::app()->createAbsoluteUrl(Yii::app()->params['imagesProductRoot'].'/'.$product->image);
+$imageSrcLink = Yii::app()->createAbsoluteUrl(Yii::app()->params['imagesProductRoot'].'/src-'.$product->image);
 
 echo '<script src="' . Yii::app()->theme->baseUrl . '/js/jquery.raty.min.js"></script>
 <script type="text/javascript">
@@ -21,18 +22,32 @@ echo '<script src="' . Yii::app()->theme->baseUrl . '/js/jquery.raty.min.js"></s
 
 <div itemscope itemtype="http://schema.org/Product">   
     <div class="row">
-        <h1 itemprop="name" class="span5">' . $product->name . '</h1>
-        <div class="span2" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+        <h1 itemprop="name" class="span12">' . $product->name . '</h1>
+        
+    </div>
+    <div class="row">
+        <div class="span4">
+            <a href="#srcProductImageModal" role="button" data-toggle="modal" title="смотреть исходное фото">
+                <img class="thumbnail" itemprop="image" src="' . $imageLink . '" title="' . $product->name . '" alt="' . $product->name . '" />
+            </a>            
+            
+            <div id="srcProductImageModal" class="modal hide fade" tabindex="-1" role="dialog" >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <label>' . $product->name . '</label>                    
+                </div>
+                <div class="modal-body">
+                    <img class="thumbnail" src="' . $imageSrcLink . '" title="обои-' . $product->name . '" alt="обои-' . $product->name . '" />
+                </div>            
+            </div>
+        </div>        
+        <div class="span4" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
             <span itemprop="ratingValue" style="display:none;">' . $productRating['averageRating'] . '</span> 
             <span id="averageRating"></span>
             <span class="muted" itemprop="reviewCount">' . $productRating['countVote'] . '</span> <span class="muted">' . Yii::t('product', 'votes') . '</span>
         </div>
-        <span class="span1 muted" itemprop="sku">sku:' . $product->id . '</span>
-    </div>
-    <div class="row">
-        <div class="span5">
-            <img class="thumbnail" itemprop="image" src="' . $imageLink . '" title="' . $product->name . '" alt="' . $product->name . '" />
-        </div>
+        <span class="muted span1" itemprop="sku">sku:' . $product->id . '</span> <br><br>
+        
         <div class="span5 alert alert-success">
             <div class="pull-left" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                 <span style="display: none;" itemprop="priceCurrency">RUB</span>
@@ -44,8 +59,7 @@ echo '<script src="' . Yii::app()->theme->baseUrl . '/js/jquery.raty.min.js"></s
             } else {
                 echo '<span class="label label-important pull-right">' . Yii::t('product', 'sold out') . '</span>&nbsp;';
             }
-echo '    
-        </div>';
+echo    '</div>';
 if (Yii::app()->user->hasFlash('successAddToCart')) {
     echo '<div class="alert alert-success span5">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>'
@@ -66,7 +80,7 @@ echo '
 
 ';
 
-echo '<h2 class="span12">' . Yii::t('product', 'comments') . '</h2>';
+echo '<h2 class="span12 small">' . Yii::t('product', 'comments') . '</h2>';
 
 $criteria = array('product_id' => (integer) $product->id);
 $comments = Comment::model()->getComments($criteria);
