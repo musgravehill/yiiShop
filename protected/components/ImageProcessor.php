@@ -9,7 +9,7 @@ class ImageProcessor {
         //echo $imageSrcLink;
         $image = new SimpleImage();
         $image->load($imageSrcLink);
-        $image->resizeToHeight(175);
+        $image->resizeToHeight(320);
         $image->save($imageLink);
     }
     

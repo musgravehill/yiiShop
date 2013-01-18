@@ -98,8 +98,8 @@ class Cart extends CActiveRecord {
     public function addTocart($postData) {
         $product = Product::model()->find(array("condition" => " stock >= " . (int) $postData['quantity'] . " AND id = " . (int) $postData['product_id'],));
         if ($product) {
-            $product->stock -= (int) $postData['quantity'];
-            $product->save();
+            //TODO in orderProcess $product->stock -= (int) $postData['quantity'];
+            //TODO in orderProcess $product->save();
             $postData['user_id'] = (int) Yii::app()->user->id;
             $postData['session_id'] = session_id();
             $itemInCart = Cart::model()->find(
@@ -182,13 +182,15 @@ class Cart extends CActiveRecord {
     }
 
     public function clearCart($user_id, $session_id) {
+        //TODO in orderProcess 
+        /*
         //return products to stock
         $productsFromCart = cart::model()->findAll(" user_id = $user_id OR  session_id = '$session_id'  ");
         foreach ($productsFromCart as $productFromCart) {
             $product = Product::model()->findByPk($productFromCart->product_id);
             $product->stock += $productFromCart->quantity;
             $product->save();
-        }
+        }*/
 
         $db = Yii::app()->db;
         $cart_table = Cart::tableName();
@@ -206,9 +208,10 @@ class Cart extends CActiveRecord {
 
     public function deleteFromCart($cartItemIDforDelete, $user_id, $session_id) {        
         if ($itemCart = cart::model()->find(" id = $cartItemIDforDelete AND ( user_id = $user_id OR session_id = '$session_id' ) ")) {
-            $product = Product::model()->findByPk($itemCart->product_id);
+            //TODO in orderProcess
+            /*$product = Product::model()->findByPk($itemCart->product_id);
             $product->stock += $itemCart->quantity; //return products to stock
-            $product->save();
+            $product->save();*/
             $itemCart->delete(); //delete item cart
         }
     }
