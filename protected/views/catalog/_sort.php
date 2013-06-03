@@ -40,8 +40,9 @@
 
 <div class="row well" >
     <?php
-    echo CHtml::beginForm('', 'POST', array('class' => 'form-horizontal',));
-    echo '                    
+    //echo CHtml::beginForm('', 'GET', array('class' => 'form-horizontal',));
+    echo '   
+        <form method="GET" class="form-inline">
         <div class="span6">
             <span class="pull-left" id="priceMin">'.$priceRangeMin.'р.</span>
             <span class="pull-right" id="priceMax">'.$priceRangeMax.'р.</span>
@@ -49,9 +50,11 @@
         <br>
         <div class="span6" id="priceRange"></div>
         <span class="span1">&nbsp;</span>     ';
-    echo CHtml::hiddenField('filter[priceRangeMin]', $priceRangeMin, array('id' => 'priceRangeMin'));
-    echo CHtml::hiddenField('filter[priceRangeMax]', $priceRangeMax, array('id' => 'priceRangeMax'));
-    echo CHtml::submitButton(Yii::t('catalog', 'show'), array('class' => 'btn btn-primary'));
-    echo CHtml::endForm();
+    //echo CHtml::hiddenField('priceRangeMin', $priceRangeMin, array('id' => 'priceRangeMin'));
+    //echo CHtml::hiddenField('priceRangeMax', $priceRangeMax, array('id' => 'priceRangeMax'));
+    echo '<button type="submit" class="btn btn-primary">'.Yii::t('catalog', 'show').'</button>';
+    //echo CHtml::submitButton(Yii::t('catalog', 'show'), array('class' => 'btn btn-primary'));
+    //echo CHtml::endForm();
+    echo '</form>';
     ?>
 </div>
