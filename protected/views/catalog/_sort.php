@@ -43,16 +43,30 @@
     //echo CHtml::beginForm('', 'GET', array('class' => 'form-horizontal',));
     echo '   
         <form method="GET" class="form-inline">
-        <div class="span6">
-            <span class="pull-left" id="priceMin">'.$priceRangeMin.'р.</span>
-            <span class="pull-right" id="priceMax">'.$priceRangeMax.'р.</span>
-        </div>
-        <br>
-        <div class="span6" id="priceRange"></div>
-        <span class="span1">&nbsp;</span>     ';
+            <div style="width:600px;">
+                <span class="pull-left" id="priceMin">'.$priceRangeMin.'р.</span>
+                <span class="pull-right" id="priceMax">'.$priceRangeMax.'р.</span>       
+                <div class="pull-left" id="priceRange"></div>
+            </div>
+        <span class="span5">
+            <a href="/gf">Воблеры</a> 
+            <a href="/gf">Воблеры</a>
+            <a href="/gf">Воблеры</a>
+            <a href="/gf">Воблеры</a>
+            <a href="/gf">Леска</a>
+            <a href="/gf">Леска</a>
+            <a href="/gf">Леска</a>
+            <a href="/gf">Леска</a>
+            <a href="/gf">Леска</a>
+            <a href="/gf">Мормышки</a>
+            <a href="/gf">Мормышки</a>
+            <a href="/gf">Мормышки</a>
+            <a href="/gf">Мормышки</a>
+            
+        </span>     ';
     //echo CHtml::hiddenField('priceRangeMin', $priceRangeMin, array('id' => 'priceRangeMin'));
     //echo CHtml::hiddenField('priceRangeMax', $priceRangeMax, array('id' => 'priceRangeMax'));
-    echo '<button type="submit" class="btn btn-primary">'.Yii::t('catalog', 'show').'</button>';
+    echo '<button type="submit" class="btn btn-primary pull-right">'.Yii::t('catalog', 'show').'</button>';
     //echo CHtml::submitButton(Yii::t('catalog', 'show'), array('class' => 'btn btn-primary'));
     //echo CHtml::endForm();
     echo '</form>';
