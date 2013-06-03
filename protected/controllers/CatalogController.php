@@ -16,18 +16,18 @@ class CatalogController extends Controller {
         } else {
             $priceRangeMin = 0;
             $priceRangeMax = $priceMax;
-        }        
+        }
 
-        $products = Product::model()->findAll(
-                array(
-                    "condition" => " stock > 0 AND price >= $priceRangeMin AND price <= $priceRangeMax ",
-                    "order" => "price", //rand()
-                    "limit" => 10,
-                )
-        );
+        if (isset($_GET['productTag'])) {
+            $tag_id = (int) $_GET['productTag'];
+        } else {
+            $tag_id = false;
+        }
+        
+        $products = Product::getProducts($priceRangeMin, $priceRangeMax, $tag_id);
 
         $this->render('viewcatalog', array("products" => $products, 'priceMax' => $priceMax,
-            'priceRangeMin' => $priceRangeMin, 'priceRangeMax' => $priceRangeMax
+            'priceRangeMin' => $priceRangeMin, 'priceRangeMax' => $priceRangeMax, 'tag_id'=>$tag_id,
         ));
     }
 

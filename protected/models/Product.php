@@ -13,6 +13,23 @@
  */
 class Product extends CActiveRecord {
 
+    public static function getProducts($priceRangeMin, $priceRangeMax, $tag_id) { //
+        ($tag_id) ? $andTagEqual = " AND yii_product.id = yii_products_tags.product_id AND yii_products_tags.tag_id = $tag_id " : $andTagEqual = ' ';
+        $db = Yii::app()->db;
+        $sql = "SELECT yii_product.id as id,name,description,price,stock,url,image,lastModified 
+        FROM yii_product , yii_products_tags 
+         WHERE 
+         stock > 0 
+        AND price >= $priceRangeMin 
+        AND price <= $priceRangeMax  
+        $andTagEqual    
+        GROUP BY yii_product.id 
+        ORDER BY price ASC      ";
+        $command = $db->createCommand($sql);
+        $rows = $command->queryAll();
+        return $rows;
+    }
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.

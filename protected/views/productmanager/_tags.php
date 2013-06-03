@@ -1,5 +1,5 @@
 <?php
-$tags = Tags::model()->findAll();
+$tags = Tags::model()->findAll("1=1 ORDER BY tag_name ASC");
 echo CHtml::beginForm('', 'POST', array('class' => 'form-inline well span3', 'id' => ''));
 echo '<h4>tags</h4>';
 echo '<div class="control-group"><label class="control-label">        
