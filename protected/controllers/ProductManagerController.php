@@ -57,6 +57,19 @@ class ProductManagerController extends Controller {
                 $this->redirect(array('view', 'id' => $model->id));
             }
         }
+        
+        if (isset($_POST['productTags'])) {
+            $productTags = $_POST['productTags']; 
+            ProductsTags::model()->deleteAll("product_id = $id");
+            foreach ($productTags as $productTag_id){
+                $ProductsTags = new ProductsTags;
+                $ProductsTags->attributes = array('product_id'=>$id, 'tag_id'=>(int)$productTag_id);
+                $ProductsTags->save();
+            }
+        }
+        
+        
+        
 
         $this->render('update', array(
             'model' => $model,

@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
+<div class="form span6">
 
 <?php
 Yii::import('ext.imperavi-redactor-widget.ImperaviRedactorWidget');
