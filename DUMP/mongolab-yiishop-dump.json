@@ -1,0 +1,3 @@
+{ "_id" : { "$oid" : "5146c2dd58da87f804000000" }, "user_id" : 53, "product_id" : 3, "author" : "Boris", "ratingValue" : 5, "title" : "Отлично!!!", "description" : "Лампа Ильича светит всегда и бесконечно!", "datePublished" : "2013-03-18 11:31:41" }
+{ "_id" : { "$oid" : "5146c36858da87c004000000" }, "user_id" : 53, "product_id" : 3, "author" : "Boris", "ratingValue" : 5, "title" : "У вас комменты в облаке на монгоЛаб?", "description" : "", "datePublished" : "2013-03-18 11:33:59" }
+{ "_id" : { "$oid" : "51a73b9d58da874005000000" }, "user_id" : 53, "product_id" : 3, "author" : "Boris", "ratingValue" : 5, "title" : "https://mongolab.com/welcome/", "description" : "", "datePublished" : "2013-05-30 15:44:29" }
