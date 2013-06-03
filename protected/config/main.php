@@ -62,7 +62,7 @@ return array(
                 //'<controller:\w+>/<id:\d+>' => '<controller>/view',
                 //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 'catalog' => 'catalog/viewcatalog',  //<lang:(en|de|ru)>
-                'catalog/<productURL:.*>' => 'product/viewproduct',
+                '<productURL:.*\.html>' => 'product/viewproduct',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
         ),        

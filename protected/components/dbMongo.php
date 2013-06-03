@@ -5,7 +5,8 @@ class dbMongo {
     protected $_db;
     protected $_collection;
     private static $_models=array();
-    private static $_connectionString = "mongodb://yiishop:yiishop@127.0.0.1:27017/yiishop";
+    //private static $_connectionString = "mongodb://yiishop:yiishop@127.0.0.1:27017/yiishop";
+    private static $_connectionString = "mongodb://yiishop:yiishop@ds051077.mongolab.com:51077/yiishop"; //my acc on https://mongolab.com/
     private static $_dbName = 'yiishop';
        
     public function __construct() {        
