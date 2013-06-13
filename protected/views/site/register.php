@@ -2,7 +2,7 @@
     <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'user-register-form',
 	'enableAjaxValidation'=>true,
-        'htmlOptions' => array('class'=>'form-horizontal span8 well',),
+        'htmlOptions' => array('class'=>'span5 well',),
 )); ?>
        
 		<?php echo $form->labelEx($model,Yii::t('user','username'),array('class'=>'span1')); ?>
@@ -21,10 +21,11 @@
         <?php if(CCaptcha::checkRequirements()): ?>	
 		<?php echo $form->labelEx($model,Yii::t('user','I`m not a bobot'),array('class'=>'span1')); ?>
 		<?php echo $form->textField($model,'verifyCode',array('class'=>'span2')); ?>
-		<?php $this->widget('CCaptcha', array('buttonLabel'=>Yii::t('user','another captcha'),'imageOptions'=>array('class'=>''),'buttonOptions'=>array('class'=>'muted'))); 
-                ?>
+                <div class="pull-right">
+		<?php $this->widget('CCaptcha', array('buttonLabel'=>Yii::t('user','another captcha'),'imageOptions'=>array('class'=>'thumbnail'),'buttonOptions'=>array('class'=>'muted'))); ?>
+                </div>
 		
-		<?php echo $form->error($model,'verifyCode',array('class'=>'pull-right label label-important')); 
+		<?php echo $form->error($model,'verifyCode',array('class'=>'pull-right span2 label label-important')); 
                 ?>
 	
 	<?php endif; ?>
