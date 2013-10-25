@@ -14,17 +14,18 @@
 class Product extends CActiveRecord {
 
     public static function getProducts($priceRangeMin, $priceRangeMax, $tag_id) { //
-        ($tag_id) ? $andTagEqual = " AND yii_product.id = yii_products_tags.product_id AND yii_products_tags.tag_id = $tag_id " : $andTagEqual = ' ';
+        $andTagEqual = ($tag_id) ? " AND yii_products_tags.tag_id = $tag_id " :  ' ';
         $db = Yii::app()->db;
         $sql = "SELECT yii_product.id as id,name,description,price,stock,url,image,lastModified 
-        FROM yii_product , yii_products_tags 
-         WHERE 
-         stock > 0 
-        AND price >= $priceRangeMin 
-        AND price <= $priceRangeMax  
-        $andTagEqual    
+        FROM yii_product 
+        LEFT JOIN yii_products_tags ON yii_product.id = yii_products_tags.product_id 
+        WHERE 
+            yii_product.stock > 0 
+            AND yii_product.price >= $priceRangeMin 
+            AND yii_product.price <= $priceRangeMax  
+            $andTagEqual    
         GROUP BY yii_product.id 
-        ORDER BY price ASC      ";
+        ORDER BY yii_product.price ASC      ";
         $command = $db->createCommand($sql);
         $rows = $command->queryAll();
         return $rows;
