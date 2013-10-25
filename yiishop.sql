@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.9.2
+-- version 3.2.5
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 17 2013 г., 09:43
--- Версия сервера: 5.1.53
+-- Время создания: Окт 25 2013 г., 23:05
+-- Версия сервера: 5.1.50
 -- Версия PHP: 5.3.13
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
@@ -33,14 +33,12 @@ CREATE TABLE IF NOT EXISTS `yii_cart` (
   `quantity` smallint(9) NOT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Дамп данных таблицы `yii_cart`
 --
 
-INSERT INTO `yii_cart` (`id`, `product_id`, `user_id`, `session_id`, `quantity`, `date_add`) VALUES
-(6, 1, 53, 'qa0hdbss57on46ilkvbl1ucr22', 5, '2013-01-17 09:19:25');
 
 -- --------------------------------------------------------
 
@@ -59,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `yii_product` (
   `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Дамп данных таблицы `yii_product`
@@ -69,8 +67,48 @@ INSERT INTO `yii_product` (`id`, `name`, `description`, `price`, `stock`, `url`,
 (1, 'Owon SDS7102 осциллограф цифровой двухканальный', 'Осциллограф цифровой Owon SDS7102– двухканальный осциллограф с полосой пропускания 100 МГц, частотой семплирования 1000 MВыб/с . Бесплатная доставка по СПб.', 19200.00, 3, 'Owon-SDS7102-ostsillograf-tsifrovoj-dvuhkanalnyj.html', 'Owon-SDS7102-ostsillograf-tsifrovoj-dvuhkanalnyj.jpg', '2013-01-16 17:20:24'),
 (2, 'Syma 107 вертолет ИК-управление, 3 канала', 'Выпустив новую модель радиоуправляемого вертолета syma s107, китайская компания попала в точку, эта модель заслужено стала любимицей моделистов. А полюбили syma s107 за его непревзойденный дизайн, легкость управления, стабильный полет, размер и прочность.', 1470.50, 1, 'Syma-107-vertolet-ik-upravlenie-3-kanala.html', 'Syma-107-vertolet-ik-upravlenie-3-kanala.jpg', '2013-01-16 17:20:11'),
 (3, 'Лампа накаливания 100 Вт', 'Лампа!!!!! Ильича, светит сплошным спектром без мерцания', 24.00, 1, 'lampa-nakalivaniya-100-vt.html', 'lampa-nakalivaniya-100-vt.jpg', '2013-01-16 17:21:06'),
-(4, 'Спички картонные', 'Спи́чка — палочка (черенок, соломка) из горючего материала, снабжённая на конце зажигательной головкой, служащая для получения открытого огня.', 57.00, 1, 'spichki-kartonnye.html', 'spichki-kartonnye.jpg', '2013-01-16 17:21:13'),
+(4, 'Спички картонные', 'Спи́чка — палочка (черенок, соломка) из горючего материала, снабжённая на конце зажигательной головкой, служащая для получения открытого огня.', 57.00, 1, 'spichki-kartonnye.html', 'spichki-kartonnye.jpg', '2013-01-19 13:22:50'),
 (5, 'Игрушка мягкая "Слон PHP"', 'для тех, кто в теме', 500.00, 1, 'igrushka-myagkaya-slon-PHP.html', 'igrushka-myagkaya-slon-PHP.jpg', '2013-01-16 17:21:21');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `yii_products_tags`
+--
+
+CREATE TABLE IF NOT EXISTS `yii_products_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `tag_id` (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Дамп данных таблицы `yii_products_tags`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `yii_tags`
+--
+
+CREATE TABLE IF NOT EXISTS `yii_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag_name` varchar(512) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tag_name` (`tag_name`(255))
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Дамп данных таблицы `yii_tags`
+--
+
+INSERT INTO `yii_tags` (`id`, `tag_name`) VALUES
+(1, 'Воблеры');
 
 -- --------------------------------------------------------
 
