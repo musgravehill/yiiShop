@@ -111,7 +111,7 @@ return array(
     // using Yii::app()->params['paramName']
     'params' => array(
         // this is used in contact page
-        'adminEmail' => 'mdeed@mail.ru',
+        'adminEmail' => 'mddds@mail.ru',
         'languages'=>array('en'=>'English', 'ru'=>'Русский'),
         'imagesProductRoot'=>'images/product', //     images/product
         
